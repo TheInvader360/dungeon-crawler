@@ -11,24 +11,62 @@ func TestGetCell(t *testing.T) {
 		{6, 7, 8},
 	}
 
-	if getCell(0, 0, gm) != 0 {
-		t.Errorf("Expected 0 (found %v).", len(gm))
+	expected := 0
+	found := getCell(0, 0, gm)
+	if found != expected {
+		t.Errorf("Expected %d (found %d).", expected, found)
 	}
 
-	if getCell(1, 0, gm) != 1 {
-		t.Errorf("Expected 1 (found %v).", len(gm))
+	expected = 1
+	found = getCell(1, 0, gm)
+	if found != expected {
+		t.Errorf("Expected %d (found %d).", expected, found)
 	}
 
-	if getCell(2, 1, gm) != 5 {
-		t.Errorf("Expected 5 (found %v).", len(gm))
+	expected = 5
+	found = getCell(2, 1, gm)
+	if found != expected {
+		t.Errorf("Expected %d (found %d).", expected, found)
 	}
 
-	if getCell(0, 2, gm) != 6 {
-		t.Errorf("Expected 6 (found %v).", len(gm))
+	expected = 6
+	found = getCell(0, 2, gm)
+	if found != expected {
+		t.Errorf("Expected %d (found %d).", expected, found)
 	}
 
-	if getCell(2, 2, gm) != 8 {
-		t.Errorf("Expected 8 (found %v).", len(gm))
+	expected = 8
+	found = getCell(2, 2, gm)
+	if found != expected {
+		t.Errorf("Expected %d (found %d).", expected, found)
+	}
+
+	//invalid x < 0
+	expected = -1
+	found = getCell(-1, 1, gm)
+	if found != expected {
+		t.Errorf("Expected %d (found %d).", expected, found)
+	}
+
+	//invalid y < 0
+	expected = -1
+	found = getCell(1, -1, gm)
+	if found != expected {
+		t.Errorf("Expected %d (found %d).", expected, found)
+	}
+
+	//invalid x out of bounds
+	expected = -1
+	found = getCell(3, 1, gm)
+	if found != expected {
+		t.Errorf("Expected %d (found %d).", expected, found)
+	}
+
+	//invalid y out of bounds
+	expected = -1
+	found = getCell(1, 3, gm)
+	if found != expected {
+		t.Errorf("Expected %d (found %d).", expected, found)
 	}
 }
 

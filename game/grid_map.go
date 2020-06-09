@@ -19,11 +19,16 @@ func newGridMap() [][]int {
 }
 
 func getCell(x int, y int, cells [][]int) int {
+	//return -1 if invalid request
+	if x < 0 || y < 0 || x >= len(cells[0]) || y >= len(cells) {
+		return -1
+	}
+
 	return cells[y][x]
 }
 
 func getCells(x int, y int, w int, h int, cells [][]int) [][]int {
-	//return nil if nonsense request
+	//return nil if invalid request
 	if x < 0 || y < 0 || w < 1 || h < 1 {
 		return nil
 	}
