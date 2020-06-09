@@ -136,16 +136,6 @@ func TestGetCells(t *testing.T) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
-	//invalid x < 0
-	if getCells(-1, 1, 1, 1, gm) != nil {
-		t.Errorf("Expected nil (x < 0)")
-	}
-
-	//invalid y < 0
-	if getCells(1, -1, 1, 1, gm) != nil {
-		t.Errorf("Expected nil (y < 0)")
-	}
-
 	//invalid w < 1
 	if getCells(1, 1, 0, 1, gm) != nil {
 		t.Errorf("Expected nil (w < 1)")
@@ -156,33 +146,166 @@ func TestGetCells(t *testing.T) {
 		t.Errorf("Expected nil (h < 1)")
 	}
 
-	//x+w out of bounds, scope reduced to return valid result
+	//out of top bounds, padded with -1's to return valid result
 	expected = [][]int{
-		{4, 5},
-		{7, 8},
-	}
-	found = getCells(1, 1, 10, 2, gm)
-	if !isEqual(expected, found) {
-		t.Errorf("Expected %v (found %v).", expected, found)
-	}
-
-	//y+h out of bounds, scope reduced to return valid result
-	expected = [][]int{
-		{4, 5},
-		{7, 8},
-	}
-	found = getCells(1, 1, 2, 10, gm)
-	if !isEqual(expected, found) {
-		t.Errorf("Expected %v (found %v).", expected, found)
-	}
-
-	//x+y and y+h out of bounds, scope reduced to return valid result
-	expected = [][]int{
+		{-1, -1, -1},
 		{0, 1, 2},
 		{3, 4, 5},
-		{6, 7, 8},
 	}
-	found = getCells(0, 0, 10, 10, gm)
+	found = getCells(0, -1, 3, 3, gm)
+	if !isEqual(expected, found) {
+		t.Errorf("Expected %v (found %v).", expected, found)
+	}
+
+	//out of right bounds, padded with -1's to return valid result
+	expected = [][]int{
+		{4, 5, -1},
+		{7, 8, -1},
+	}
+	found = getCells(1, 1, 3, 2, gm)
+	if !isEqual(expected, found) {
+		t.Errorf("Expected %v (found %v).", expected, found)
+	}
+
+	//out of bottom bounds, padded with -1's to return valid result
+	expected = [][]int{
+		{5},
+		{8},
+		{-1},
+	}
+	found = getCells(2, 1, 1, 3, gm)
+	if !isEqual(expected, found) {
+		t.Errorf("Expected %v (found %v).", expected, found)
+	}
+
+	//out of left bounds, padded with -1's to return valid result
+	expected = [][]int{
+		{-1, -1, 3, 4},
+	}
+	found = getCells(-2, 1, 4, 1, gm)
+	if !isEqual(expected, found) {
+		t.Errorf("Expected %v (found %v).", expected, found)
+	}
+
+	//out of top-left bounds, padded with -1's to return valid result
+	expected = [][]int{
+		{-1, -1, -1, -1},
+		{-1, -1, 0, 1},
+	}
+	found = getCells(-2, -1, 4, 2, gm)
+	if !isEqual(expected, found) {
+		t.Errorf("Expected %v (found %v).", expected, found)
+	}
+
+	//out of top-right bounds, padded with -1's to return valid result
+	expected = [][]int{
+		{-1, -1, -1, -1},
+		{1, 2, -1, -1},
+	}
+	found = getCells(1, -1, 4, 2, gm)
+	if !isEqual(expected, found) {
+		t.Errorf("Expected %v (found %v).", expected, found)
+	}
+
+	//out of bottom-left bounds, padded with -1's to return valid result
+	expected = [][]int{
+		{-1, 6, 7},
+		{-1, -1, -1},
+	}
+	found = getCells(-1, 2, 3, 2, gm)
+	if !isEqual(expected, found) {
+		t.Errorf("Expected %v (found %v).", expected, found)
+	}
+
+	//out of bottom-right bounds, padded with -1's to return valid result
+	expected = [][]int{
+		{7, 8, -1},
+		{-1, -1, -1},
+	}
+	found = getCells(1, 2, 3, 2, gm)
+	if !isEqual(expected, found) {
+		t.Errorf("Expected %v (found %v).", expected, found)
+	}
+
+	//out of top-bottom bounds, padded with -1's to return valid result
+	expected = [][]int{
+		{-1, -1},
+		{0, 1},
+		{3, 4},
+		{6, 7},
+		{-1, -1},
+		{-1, -1},
+	}
+	found = getCells(0, -1, 2, 6, gm)
+	if !isEqual(expected, found) {
+		t.Errorf("Expected %v (found %v).", expected, found)
+	}
+
+	//out of left-right bounds, padded with -1's to return valid result
+	expected = [][]int{
+		{-1, -1, 3, 4, 5, -1, -1},
+	}
+	found = getCells(-2, 1, 7, 1, gm)
+	if !isEqual(expected, found) {
+		t.Errorf("Expected %v (found %v).", expected, found)
+	}
+
+	//out of left-top-right bounds, padded with -1's to return valid result
+	expected = [][]int{
+		{-1, -1, -1, -1, -1},
+		{-1, 0, 1, 2, -1},
+	}
+	found = getCells(-1, -1, 5, 2, gm)
+	if !isEqual(expected, found) {
+		t.Errorf("Expected %v (found %v).", expected, found)
+	}
+
+	//out of top-right-bottom bounds, padded with -1's to return valid result
+	expected = [][]int{
+		{-1, -1, -1},
+		{1, 2, -1},
+		{4, 5, -1},
+		{7, 8, -1},
+		{-1, -1, -1},
+	}
+	found = getCells(1, -1, 3, 5, gm)
+	if !isEqual(expected, found) {
+		t.Errorf("Expected %v (found %v).", expected, found)
+	}
+
+	//out of right-bottom-left bounds, padded with -1's to return valid result
+	expected = [][]int{
+		{-1, 6, 7, 8, -1},
+		{-1, -1, -1, -1, -1},
+	}
+	found = getCells(-1, 2, 5, 2, gm)
+	if !isEqual(expected, found) {
+		t.Errorf("Expected %v (found %v).", expected, found)
+	}
+
+	//out of bottom-left-top bounds, padded with -1's to return valid result
+	expected = [][]int{
+		{-1, -1, -1, -1},
+		{-1, -1, -1, 0},
+		{-1, -1, -1, 3},
+		{-1, -1, -1, 6},
+		{-1, -1, -1, -1},
+		{-1, -1, -1, -1},
+	}
+	found = getCells(-3, -1, 4, 6, gm)
+	if !isEqual(expected, found) {
+		t.Errorf("Expected %v (found %v).", expected, found)
+	}
+
+	//out of all bounds, padded with -1's to return valid result
+	expected = [][]int{
+		{-1, -1, -1, -1, -1},
+		{-1, 0, 1, 2, -1},
+		{-1, 3, 4, 5, -1},
+		{-1, 6, 7, 8, -1},
+		{-1, -1, -1, -1, -1},
+	}
+	found = getCells(-1, -1, 5, 5, gm)
 	if !isEqual(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}

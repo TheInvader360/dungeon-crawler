@@ -57,18 +57,16 @@ func (g *Game) Update(screen *ebiten.Image) error {
 
 //Draw ...
 func (g *Game) Draw(screen *ebiten.Image) {
+	firstPersonImg = renderFirstPersonView(g, firstPersonImg)
+	fpOp := &ebiten.DrawImageOptions{}
+	screen.DrawImage(firstPersonImg, fpOp)
 	if !ebiten.IsKeyPressed(ebiten.KeyZ) {
-		firstPersonImg = renderFirstPersonView(g, firstPersonImg)
-		fpOp := &ebiten.DrawImageOptions{}
-		screen.DrawImage(firstPersonImg, fpOp)
+		ebitenutil.DebugPrint(screen, fmt.Sprintf("%s", g.player))
 	}
 	if !ebiten.IsKeyPressed(ebiten.KeyX) {
 		miniMapImg = renderMiniMapView(g, miniMapImg)
 		mmOp := &ebiten.DrawImageOptions{}
 		screen.DrawImage(miniMapImg, mmOp)
-	}
-	if !ebiten.IsKeyPressed(ebiten.KeyC) {
-		ebitenutil.DebugPrint(screen, fmt.Sprintf("%s", g.player))
 	}
 }
 

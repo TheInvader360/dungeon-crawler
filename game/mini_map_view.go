@@ -9,7 +9,8 @@ import (
 )
 
 const (
-	cellSize = 5
+	cellSize     = 5
+	viewportSize = 9
 )
 
 var (
@@ -21,8 +22,8 @@ var (
 )
 
 func init() {
-	offsetX = screenWidth - cellSize*7
-	offsetY = 0
+	offsetX = screenWidth - cellSize*(viewportSize+1)
+	offsetY = (screenHeight - cellSize*viewportSize) / 2
 	blockedImg, _, err = ebitenutil.NewImageFromFile("../assets/blocked.png", ebiten.FilterDefault)
 	if err != nil {
 		log.Fatal(err)
@@ -38,14 +39,13 @@ func init() {
 }
 
 func renderMiniMapView(g *Game, v *ebiten.Image) *ebiten.Image {
-	for y := range g.gridMap {
-		for x := range g.gridMap[y] {
+	viewportCells := getCells(g.player.x-((viewportSize-1)/2), g.player.y-((viewportSize-1)/2), viewportSize, viewportSize, g.gridMap)
+	for y := range viewportCells {
+		for x := range viewportCells[y] {
 			cellOp := &ebiten.DrawImageOptions{}
-			cellOp.GeoM.Translate(float64(offsetX+x*cellSize), float64(offsetY+y*cellSize))
-			if getCell(x, y, g.gridMap) == 0 {
-				v.DrawImage(unblockedImg, cellOp)
-			}
-			if getCell(x, y, g.gridMap) == 1 {
+			cellOp.GeoM.Translate(float64(x*cellSize+offsetX), float64(y*cellSize+offsetY))
+			v.DrawImage(unblockedImg, cellOp)
+			if viewportCells[y][x] == 1 {
 				v.DrawImage(blockedImg, cellOp)
 			}
 		}
@@ -55,7 +55,8 @@ func renderMiniMapView(g *Game, v *ebiten.Image) *ebiten.Image {
 	w, h := playerImg.Size()
 	playerOp.GeoM.Translate(-float64(w)/2, -float64(h)/2) //move centre of image to origin before rotating
 	playerOp.GeoM.Rotate(float64(g.player.dir*90) * 2 * math.Pi / 360)
-	playerOp.GeoM.Translate(float64(offsetX+g.player.x*cellSize+w/2), float64(offsetY+g.player.y*cellSize+h/2))
+	playerOp.GeoM.Translate(float64(w)/2, float64(h)/2) //move centre of image back to the starting point
+	playerOp.GeoM.Translate(float64(cellSize*((viewportSize-1)/2)+offsetX), float64(cellSize*((viewportSize-1)/2)+offsetY))
 	v.DrawImage(playerImg, playerOp)
 
 	return v
