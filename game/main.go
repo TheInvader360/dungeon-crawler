@@ -10,8 +10,9 @@ import (
 )
 
 const (
-	screenWidth  = 80
+	screenWidth  = 60
 	screenHeight = 60
+	skin         = "rgb" // 1bit / db16 / rgb
 )
 
 var (

@@ -13,9 +13,10 @@ import (
 )
 
 const (
-	screenWidth  = 80
-	screenHeight = 108
-	cellSize     = 16
+	screenWidth  = 60
+	screenHeight = 96
+	skin         = "rgb" // 1bit / db16 / rgb
+	cellSize     = 12
 )
 
 var (
@@ -41,7 +42,7 @@ func initGame() func(*ebiten.Image) error {
 	if err != nil {
 		log.Fatal(err)
 	}
-	bg, _, err = ebitenutil.NewImageFromFile("../assets/rgb/bg.png", ebiten.FilterDefault)
+	bg, _, err = ebitenutil.NewImageFromFile(fmt.Sprintf("../assets/%s/bg.png", skin), ebiten.FilterDefault)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -57,12 +58,12 @@ func initGame() func(*ebiten.Image) error {
 	if err != nil {
 		log.Fatal(err)
 	}
-	for i := 0; i < 12; i++ {
+	for i := 0; i < 10; i++ {
 		cell := cell{}
-		if i == 3 || i == 4 || i == 7 || i == 11 {
+		if i == 3 || i == 4 || i == 5 || i == 9 {
 			cell.blocked = true
 		}
-		if i < 5 || i > 6 {
+		if i > 1 && i < 8 {
 			cell.entity = true
 		}
 		if i < 5 {
@@ -78,28 +79,24 @@ func initGame() func(*ebiten.Image) error {
 			} else {
 				cell.btnX = 2 * cellSize
 			}
-		} else if i < 10 {
+		} else if i < 8 {
 			cell.btnY = screenHeight - 2*cellSize
 			if i == 5 {
-				cell.btnX = 0
-			} else if i == 6 {
-				cell.btnX = 4 * cellSize
-			} else if i == 7 {
 				cell.btnX = cellSize
-			} else if i == 8 {
+			} else if i == 6 {
 				cell.btnX = 3 * cellSize
 			} else {
 				cell.btnX = 2 * cellSize
 			}
 		} else {
 			cell.btnY = screenHeight - cellSize
-			if i == 10 {
+			if i == 8 {
 				cell.btnX = cellSize
 			} else {
 				cell.btnX = 3 * cellSize
 			}
 		}
-		var path = fmt.Sprintf("../assets/rgb/%d.png", i)
+		var path = fmt.Sprintf("../assets/%s/%d.png", skin, i)
 		var view, _, err = ebitenutil.NewImageFromFile(path, ebiten.FilterDefault)
 		if err != nil {
 			log.Fatal(err)
@@ -141,47 +138,30 @@ func initGame() func(*ebiten.Image) error {
 			if cell.entity {
 				entityOp := &ebiten.DrawImageOptions{}
 				//FAR, L-R
-				if i == 0 {
-					entityOp.GeoM.Translate(-10, 20)
-					screen.DrawImage(entityFar, entityOp)
-				}
 				if i == 2 {
-					entityOp.GeoM.Translate(10, 20)
+					entityOp.GeoM.Translate(1, 20)
 					screen.DrawImage(entityFar, entityOp)
 				}
 				if i == 4 {
-					entityOp.GeoM.Translate(30, 20)
+					entityOp.GeoM.Translate(21, 20)
 					screen.DrawImage(entityFar, entityOp)
 				}
 				if i == 3 {
-					entityOp.GeoM.Translate(50, 20)
-					screen.DrawImage(entityFar, entityOp)
-				}
-				if i == 1 {
-					entityOp.GeoM.Translate(70, 20)
+					entityOp.GeoM.Translate(41, 20)
 					screen.DrawImage(entityFar, entityOp)
 				}
 				//MID, L-R
+				if i == 5 {
+					entityOp.GeoM.Translate(-13, 15)
+					screen.DrawImage(entityMid, entityOp)
+				}
 				if i == 7 {
-					entityOp.GeoM.Translate(-5, 15)
+					entityOp.GeoM.Translate(17, 15)
 					screen.DrawImage(entityMid, entityOp)
 				}
-				if i == 9 {
-					entityOp.GeoM.Translate(25, 15)
+				if i == 6 {
+					entityOp.GeoM.Translate(47, 15)
 					screen.DrawImage(entityMid, entityOp)
-				}
-				if i == 8 {
-					entityOp.GeoM.Translate(55, 15)
-					screen.DrawImage(entityMid, entityOp)
-				}
-				//NEAR, L-R
-				if i == 10 {
-					entityOp.GeoM.Translate(-41, 3)
-					screen.DrawImage(entityNear, entityOp)
-				}
-				if i == 11 {
-					entityOp.GeoM.Translate(67, 3)
-					screen.DrawImage(entityNear, entityOp)
 				}
 			}
 			if cell.blocked {

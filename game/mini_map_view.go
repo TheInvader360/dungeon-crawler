@@ -22,8 +22,8 @@ var (
 )
 
 func init() {
-	offsetX = screenWidth - cellSize*(viewportSize+1)
-	offsetY = (screenHeight - cellSize*viewportSize) / 2
+	offsetX = screenWidth - cellSize*viewportSize
+	offsetY = screenHeight - cellSize*viewportSize
 	blockedImg, _, err = ebitenutil.NewImageFromFile("../assets/blocked.png", ebiten.FilterDefault)
 	if err != nil {
 		log.Fatal(err)

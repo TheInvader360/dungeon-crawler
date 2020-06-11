@@ -13,7 +13,7 @@ func newPlayer() player {
 }
 
 func (p player) String() string {
-	return fmt.Sprintf("x:%d\ny:%d\ndir:%s", p.x, p.y, p.dir)
+	return fmt.Sprintf("%s(%d,%d)", p.dir, p.x, p.y)
 }
 
 func (p *player) getCoordInFront() (int, int) {
