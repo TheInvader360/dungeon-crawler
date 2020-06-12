@@ -29,8 +29,7 @@ func init() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	//entityNearImg, _, err = ebitenutil.NewImageFromFile(fmt.Sprintf("../assets/entity/%sNear.png", testEnemy), ebiten.FilterDefault)
-	entityNearImg, _, err = ebitenutil.NewImageFromFile(fmt.Sprintf("../assets/entity/%sNear2.png", testEnemy), ebiten.FilterDefault)
+	entityNearImg, _, err = ebitenutil.NewImageFromFile(fmt.Sprintf("../assets/entity/%sNear.png", testEnemy), ebiten.FilterDefault)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -130,7 +129,6 @@ func renderFirstPersonView(g *Game, v *ebiten.Image) *ebiten.Image {
 			}
 			//TODO: Remove, see comment above...
 			if i == 10 {
-				//cellOp.GeoM.Translate(6, 3) //Uncomment for "Near" / Comment out for "Near2"
 				v.DrawImage(entityNearImg, cellOp)
 			}
 		}
