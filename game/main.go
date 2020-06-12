@@ -12,7 +12,8 @@ import (
 const (
 	screenWidth  = 60
 	screenHeight = 60
-	skin         = "rgb" // 1bit / db16 / rgb
+	testSkin     = "rgb"    // 1bit / db16 / rgb
+	testEnemy    = "enemy4" // entity / enemy0 / enemy1 / enemy2 / enemy3 / enemy4
 )
 
 var (
@@ -61,10 +62,10 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	firstPersonImg = renderFirstPersonView(g, firstPersonImg)
 	fpOp := &ebiten.DrawImageOptions{}
 	screen.DrawImage(firstPersonImg, fpOp)
-	if !ebiten.IsKeyPressed(ebiten.KeyZ) {
+	if ebiten.IsKeyPressed(ebiten.KeyZ) {
 		ebitenutil.DebugPrint(screen, fmt.Sprintf("%s", g.player))
 	}
-	if !ebiten.IsKeyPressed(ebiten.KeyX) {
+	if ebiten.IsKeyPressed(ebiten.KeyX) {
 		miniMapImg = renderMiniMapView(g, miniMapImg)
 		mmOp := &ebiten.DrawImageOptions{}
 		screen.DrawImage(miniMapImg, mmOp)

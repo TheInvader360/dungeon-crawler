@@ -46,15 +46,15 @@ func initGame() func(*ebiten.Image) error {
 	if err != nil {
 		log.Fatal(err)
 	}
-	entityFar, _, err = ebitenutil.NewImageFromFile("../assets/entityFar.png", ebiten.FilterDefault)
+	entityFar, _, err = ebitenutil.NewImageFromFile("../assets/entity/entityFar.png", ebiten.FilterDefault)
 	if err != nil {
 		log.Fatal(err)
 	}
-	entityMid, _, err = ebitenutil.NewImageFromFile("../assets/entityMid.png", ebiten.FilterDefault)
+	entityMid, _, err = ebitenutil.NewImageFromFile("../assets/entity/entityMid.png", ebiten.FilterDefault)
 	if err != nil {
 		log.Fatal(err)
 	}
-	entityNear, _, err = ebitenutil.NewImageFromFile("../assets/entityNear.png", ebiten.FilterDefault)
+	entityNear, _, err = ebitenutil.NewImageFromFile("../assets/entity/entityNear.png", ebiten.FilterDefault)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -19,20 +19,25 @@ var (
 	blockedImg   *ebiten.Image
 	unblockedImg *ebiten.Image
 	playerImg    *ebiten.Image
+	enemyImg     *ebiten.Image
 )
 
 func init() {
 	offsetX = screenWidth - cellSize*viewportSize
 	offsetY = screenHeight - cellSize*viewportSize
-	blockedImg, _, err = ebitenutil.NewImageFromFile("../assets/blocked.png", ebiten.FilterDefault)
+	blockedImg, _, err = ebitenutil.NewImageFromFile("../assets/mini_map/blocked.png", ebiten.FilterDefault)
 	if err != nil {
 		log.Fatal(err)
 	}
-	unblockedImg, _, err = ebitenutil.NewImageFromFile("../assets/unblocked.png", ebiten.FilterDefault)
+	unblockedImg, _, err = ebitenutil.NewImageFromFile("../assets/mini_map/unblocked.png", ebiten.FilterDefault)
 	if err != nil {
 		log.Fatal(err)
 	}
-	playerImg, _, err = ebitenutil.NewImageFromFile("../assets/player.png", ebiten.FilterDefault)
+	playerImg, _, err = ebitenutil.NewImageFromFile("../assets/mini_map/player.png", ebiten.FilterDefault)
+	if err != nil {
+		log.Fatal(err)
+	}
+	enemyImg, _, err = ebitenutil.NewImageFromFile("../assets/mini_map/enemy.png", ebiten.FilterDefault)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -47,6 +52,9 @@ func renderMiniMapView(g *Game, v *ebiten.Image) *ebiten.Image {
 			v.DrawImage(unblockedImg, cellOp)
 			if viewportCells[y][x] == 1 {
 				v.DrawImage(blockedImg, cellOp)
+			}
+			if viewportCells[y][x] > 1 {
+				v.DrawImage(enemyImg, cellOp)
 			}
 		}
 	}
