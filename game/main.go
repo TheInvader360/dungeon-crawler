@@ -19,6 +19,7 @@ const (
 var (
 	firstPersonImg *ebiten.Image
 	miniMapImg     *ebiten.Image
+	combatImg      *ebiten.Image
 	err            error
 )
 
@@ -32,27 +33,41 @@ func dungeonCrawler() *Game {
 func init() {
 	firstPersonImg, _ = ebiten.NewImage(screenWidth, screenHeight, ebiten.FilterNearest)
 	miniMapImg, _ = ebiten.NewImage(screenWidth, screenHeight, ebiten.FilterNearest)
+	combatImg, _ = ebiten.NewImage(screenWidth, screenHeight, ebiten.FilterNearest)
 }
 
 //Game ...
 type Game struct {
-	gridMap [][]int
-	player  player
+	gameState gameState
+	gridMap   [][]int
+	player    player
 }
 
 //Update ...
 func (g *Game) Update(screen *ebiten.Image) error {
-	if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
-		x, y := g.player.getCoordInFront()
-		if getCell(x, y, g.gridMap) != 1 {
-			g.player.moveTo(x, y)
+	switch g.gameState {
+	case exploration:
+		if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
+			x, y := g.player.getCoordInFront()
+			target := getCell(x, y, g.gridMap)
+			if target != 1 {
+				g.player.moveTo(x, y)
+			}
+			if target > 1 {
+				g.gameState = combat
+			}
 		}
-	}
-	if inpututil.IsKeyJustPressed(ebiten.KeyLeft) {
-		g.player.turnLeft()
-	}
-	if inpututil.IsKeyJustPressed(ebiten.KeyRight) {
-		g.player.turnRight()
+		if inpututil.IsKeyJustPressed(ebiten.KeyLeft) {
+			g.player.turnLeft()
+		}
+		if inpututil.IsKeyJustPressed(ebiten.KeyRight) {
+			g.player.turnRight()
+		}
+	case combat:
+		if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
+			setCell(g.player.x, g.player.y, 0, g.gridMap)
+			g.gameState = exploration
+		}
 	}
 	return nil
 }
@@ -62,13 +77,20 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	firstPersonImg = renderFirstPersonView(g.player, g.gridMap, firstPersonImg)
 	fpOp := &ebiten.DrawImageOptions{}
 	screen.DrawImage(firstPersonImg, fpOp)
-	if ebiten.IsKeyPressed(ebiten.KeyZ) {
-		ebitenutil.DebugPrint(screen, fmt.Sprintf("%s", g.player))
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyX) {
-		miniMapImg = renderMiniMapView(g.player, g.gridMap, miniMapImg)
-		mmOp := &ebiten.DrawImageOptions{}
-		screen.DrawImage(miniMapImg, mmOp)
+	switch g.gameState {
+	case exploration:
+		if ebiten.IsKeyPressed(ebiten.KeyZ) {
+			ebitenutil.DebugPrint(screen, fmt.Sprintf("%s", g.player))
+		}
+		if ebiten.IsKeyPressed(ebiten.KeyDown) {
+			miniMapImg = renderMiniMapView(g.player, g.gridMap, miniMapImg)
+			mmOp := &ebiten.DrawImageOptions{}
+			screen.DrawImage(miniMapImg, mmOp)
+		}
+	case combat:
+		enOp := &ebiten.DrawImageOptions{}
+		screen.DrawImage(entityNearImg, enOp)
+		ebitenutil.DebugPrint(screen, "COMBAT\nSTUB")
 	}
 }
 

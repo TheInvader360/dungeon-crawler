@@ -47,8 +47,8 @@ func renderFirstPersonView(p player, gm [][]int, v *ebiten.Image) *ebiten.Image 
 	bgOp := &ebiten.DrawImageOptions{}
 	v.DrawImage(bgImg, bgOp)
 
-	//order: ffll, ffrr, ffl, ffr, ff, fl, fr, f, l, r, x
-	fovCells := []int{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+	//order: ffll, ffrr, ffl, ffr, ff, fl, fr, f, l, r
+	fovCells := []int{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 	switch p.dir {
 	case north:
 		fovCells[0] = getCell(p.x-2, p.y-2, gm)
@@ -95,8 +95,6 @@ func renderFirstPersonView(p player, gm [][]int, v *ebiten.Image) *ebiten.Image 
 		fovCells[8] = getCell(p.x, p.y+1, gm)
 		fovCells[9] = getCell(p.x, p.y-1, gm)
 	}
-	//TODO: Do not display current cell entity. Near enemy shown in combat mode only. Other entities blocking or pickups.
-	fovCells[10] = getCell(p.x, p.y, gm)
 
 	for i := range fovCells {
 		cellOp := &ebiten.DrawImageOptions{}
@@ -126,10 +124,6 @@ func renderFirstPersonView(p player, gm [][]int, v *ebiten.Image) *ebiten.Image 
 			if i == 7 {
 				cellOp.GeoM.Translate(17, 15)
 				v.DrawImage(entityMidImg, cellOp)
-			}
-			//TODO: Remove, see comment above...
-			if i == 10 {
-				v.DrawImage(entityNearImg, cellOp)
 			}
 		}
 	}
