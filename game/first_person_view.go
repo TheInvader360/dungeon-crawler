@@ -43,60 +43,60 @@ func init() {
 	}
 }
 
-func renderFirstPersonView(g *Game, v *ebiten.Image) *ebiten.Image {
+func renderFirstPersonView(p player, gm [][]int, v *ebiten.Image) *ebiten.Image {
 	bgOp := &ebiten.DrawImageOptions{}
 	v.DrawImage(bgImg, bgOp)
 
 	//order: ffll, ffrr, ffl, ffr, ff, fl, fr, f, l, r, x
 	fovCells := []int{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	switch g.player.dir {
+	switch p.dir {
 	case north:
-		fovCells[0] = getCell(g.player.x-2, g.player.y-2, g.gridMap)
-		fovCells[1] = getCell(g.player.x+2, g.player.y-2, g.gridMap)
-		fovCells[2] = getCell(g.player.x-1, g.player.y-2, g.gridMap)
-		fovCells[3] = getCell(g.player.x+1, g.player.y-2, g.gridMap)
-		fovCells[4] = getCell(g.player.x, g.player.y-2, g.gridMap)
-		fovCells[5] = getCell(g.player.x-1, g.player.y-1, g.gridMap)
-		fovCells[6] = getCell(g.player.x+1, g.player.y-1, g.gridMap)
-		fovCells[7] = getCell(g.player.x, g.player.y-1, g.gridMap)
-		fovCells[8] = getCell(g.player.x-1, g.player.y, g.gridMap)
-		fovCells[9] = getCell(g.player.x+1, g.player.y, g.gridMap)
+		fovCells[0] = getCell(p.x-2, p.y-2, gm)
+		fovCells[1] = getCell(p.x+2, p.y-2, gm)
+		fovCells[2] = getCell(p.x-1, p.y-2, gm)
+		fovCells[3] = getCell(p.x+1, p.y-2, gm)
+		fovCells[4] = getCell(p.x, p.y-2, gm)
+		fovCells[5] = getCell(p.x-1, p.y-1, gm)
+		fovCells[6] = getCell(p.x+1, p.y-1, gm)
+		fovCells[7] = getCell(p.x, p.y-1, gm)
+		fovCells[8] = getCell(p.x-1, p.y, gm)
+		fovCells[9] = getCell(p.x+1, p.y, gm)
 	case east:
-		fovCells[0] = getCell(g.player.x+2, g.player.y-2, g.gridMap)
-		fovCells[1] = getCell(g.player.x+2, g.player.y+2, g.gridMap)
-		fovCells[2] = getCell(g.player.x+2, g.player.y-1, g.gridMap)
-		fovCells[3] = getCell(g.player.x+2, g.player.y+1, g.gridMap)
-		fovCells[4] = getCell(g.player.x+2, g.player.y, g.gridMap)
-		fovCells[5] = getCell(g.player.x+1, g.player.y-1, g.gridMap)
-		fovCells[6] = getCell(g.player.x+1, g.player.y+1, g.gridMap)
-		fovCells[7] = getCell(g.player.x+1, g.player.y, g.gridMap)
-		fovCells[8] = getCell(g.player.x, g.player.y-1, g.gridMap)
-		fovCells[9] = getCell(g.player.x, g.player.y+1, g.gridMap)
+		fovCells[0] = getCell(p.x+2, p.y-2, gm)
+		fovCells[1] = getCell(p.x+2, p.y+2, gm)
+		fovCells[2] = getCell(p.x+2, p.y-1, gm)
+		fovCells[3] = getCell(p.x+2, p.y+1, gm)
+		fovCells[4] = getCell(p.x+2, p.y, gm)
+		fovCells[5] = getCell(p.x+1, p.y-1, gm)
+		fovCells[6] = getCell(p.x+1, p.y+1, gm)
+		fovCells[7] = getCell(p.x+1, p.y, gm)
+		fovCells[8] = getCell(p.x, p.y-1, gm)
+		fovCells[9] = getCell(p.x, p.y+1, gm)
 	case south:
-		fovCells[0] = getCell(g.player.x+2, g.player.y+2, g.gridMap)
-		fovCells[1] = getCell(g.player.x-2, g.player.y+2, g.gridMap)
-		fovCells[2] = getCell(g.player.x+1, g.player.y+2, g.gridMap)
-		fovCells[3] = getCell(g.player.x-1, g.player.y+2, g.gridMap)
-		fovCells[4] = getCell(g.player.x, g.player.y+2, g.gridMap)
-		fovCells[5] = getCell(g.player.x+1, g.player.y+1, g.gridMap)
-		fovCells[6] = getCell(g.player.x-1, g.player.y+1, g.gridMap)
-		fovCells[7] = getCell(g.player.x, g.player.y+1, g.gridMap)
-		fovCells[8] = getCell(g.player.x+1, g.player.y, g.gridMap)
-		fovCells[9] = getCell(g.player.x-1, g.player.y, g.gridMap)
+		fovCells[0] = getCell(p.x+2, p.y+2, gm)
+		fovCells[1] = getCell(p.x-2, p.y+2, gm)
+		fovCells[2] = getCell(p.x+1, p.y+2, gm)
+		fovCells[3] = getCell(p.x-1, p.y+2, gm)
+		fovCells[4] = getCell(p.x, p.y+2, gm)
+		fovCells[5] = getCell(p.x+1, p.y+1, gm)
+		fovCells[6] = getCell(p.x-1, p.y+1, gm)
+		fovCells[7] = getCell(p.x, p.y+1, gm)
+		fovCells[8] = getCell(p.x+1, p.y, gm)
+		fovCells[9] = getCell(p.x-1, p.y, gm)
 	case west:
-		fovCells[0] = getCell(g.player.x-2, g.player.y+2, g.gridMap)
-		fovCells[1] = getCell(g.player.x-2, g.player.y-2, g.gridMap)
-		fovCells[2] = getCell(g.player.x-2, g.player.y+1, g.gridMap)
-		fovCells[3] = getCell(g.player.x-2, g.player.y-1, g.gridMap)
-		fovCells[4] = getCell(g.player.x-2, g.player.y, g.gridMap)
-		fovCells[5] = getCell(g.player.x-1, g.player.y+1, g.gridMap)
-		fovCells[6] = getCell(g.player.x-1, g.player.y-1, g.gridMap)
-		fovCells[7] = getCell(g.player.x-1, g.player.y, g.gridMap)
-		fovCells[8] = getCell(g.player.x, g.player.y+1, g.gridMap)
-		fovCells[9] = getCell(g.player.x, g.player.y-1, g.gridMap)
+		fovCells[0] = getCell(p.x-2, p.y+2, gm)
+		fovCells[1] = getCell(p.x-2, p.y-2, gm)
+		fovCells[2] = getCell(p.x-2, p.y+1, gm)
+		fovCells[3] = getCell(p.x-2, p.y-1, gm)
+		fovCells[4] = getCell(p.x-2, p.y, gm)
+		fovCells[5] = getCell(p.x-1, p.y+1, gm)
+		fovCells[6] = getCell(p.x-1, p.y-1, gm)
+		fovCells[7] = getCell(p.x-1, p.y, gm)
+		fovCells[8] = getCell(p.x, p.y+1, gm)
+		fovCells[9] = getCell(p.x, p.y-1, gm)
 	}
 	//TODO: Do not display current cell entity. Near enemy shown in combat mode only. Other entities blocking or pickups.
-	fovCells[10] = getCell(g.player.x, g.player.y, g.gridMap)
+	fovCells[10] = getCell(p.x, p.y, gm)
 
 	for i := range fovCells {
 		cellOp := &ebiten.DrawImageOptions{}

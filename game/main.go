@@ -59,14 +59,14 @@ func (g *Game) Update(screen *ebiten.Image) error {
 
 //Draw ...
 func (g *Game) Draw(screen *ebiten.Image) {
-	firstPersonImg = renderFirstPersonView(g, firstPersonImg)
+	firstPersonImg = renderFirstPersonView(g.player, g.gridMap, firstPersonImg)
 	fpOp := &ebiten.DrawImageOptions{}
 	screen.DrawImage(firstPersonImg, fpOp)
 	if ebiten.IsKeyPressed(ebiten.KeyZ) {
 		ebitenutil.DebugPrint(screen, fmt.Sprintf("%s", g.player))
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyX) {
-		miniMapImg = renderMiniMapView(g, miniMapImg)
+		miniMapImg = renderMiniMapView(g.player, g.gridMap, miniMapImg)
 		mmOp := &ebiten.DrawImageOptions{}
 		screen.DrawImage(miniMapImg, mmOp)
 	}

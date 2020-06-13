@@ -84,7 +84,7 @@ func TestGetCells(t *testing.T) {
 		{6, 7, 8},
 	}
 	found := getCells(0, 0, 3, 3, gm)
-	if !isEqual(expected, found) {
+	if !isEqual2DSliceInt(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
@@ -94,7 +94,7 @@ func TestGetCells(t *testing.T) {
 		{3, 4},
 	}
 	found = getCells(0, 0, 2, 2, gm)
-	if !isEqual(expected, found) {
+	if !isEqual2DSliceInt(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
@@ -104,7 +104,7 @@ func TestGetCells(t *testing.T) {
 		{7, 8},
 	}
 	found = getCells(1, 1, 2, 2, gm)
-	if !isEqual(expected, found) {
+	if !isEqual2DSliceInt(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
@@ -114,7 +114,7 @@ func TestGetCells(t *testing.T) {
 		{6},
 	}
 	found = getCells(0, 1, 1, 2, gm)
-	if !isEqual(expected, found) {
+	if !isEqual2DSliceInt(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
@@ -123,7 +123,7 @@ func TestGetCells(t *testing.T) {
 		{7, 8},
 	}
 	found = getCells(1, 2, 2, 1, gm)
-	if !isEqual(expected, found) {
+	if !isEqual2DSliceInt(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
@@ -132,7 +132,7 @@ func TestGetCells(t *testing.T) {
 		{5},
 	}
 	found = getCells(2, 1, 1, 1, gm)
-	if !isEqual(expected, found) {
+	if !isEqual2DSliceInt(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
@@ -153,7 +153,7 @@ func TestGetCells(t *testing.T) {
 		{3, 4, 5},
 	}
 	found = getCells(0, -1, 3, 3, gm)
-	if !isEqual(expected, found) {
+	if !isEqual2DSliceInt(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
@@ -163,7 +163,7 @@ func TestGetCells(t *testing.T) {
 		{7, 8, -1},
 	}
 	found = getCells(1, 1, 3, 2, gm)
-	if !isEqual(expected, found) {
+	if !isEqual2DSliceInt(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
@@ -174,7 +174,7 @@ func TestGetCells(t *testing.T) {
 		{-1},
 	}
 	found = getCells(2, 1, 1, 3, gm)
-	if !isEqual(expected, found) {
+	if !isEqual2DSliceInt(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
@@ -183,7 +183,7 @@ func TestGetCells(t *testing.T) {
 		{-1, -1, 3, 4},
 	}
 	found = getCells(-2, 1, 4, 1, gm)
-	if !isEqual(expected, found) {
+	if !isEqual2DSliceInt(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
@@ -193,7 +193,7 @@ func TestGetCells(t *testing.T) {
 		{-1, -1, 0, 1},
 	}
 	found = getCells(-2, -1, 4, 2, gm)
-	if !isEqual(expected, found) {
+	if !isEqual2DSliceInt(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
@@ -203,7 +203,7 @@ func TestGetCells(t *testing.T) {
 		{1, 2, -1, -1},
 	}
 	found = getCells(1, -1, 4, 2, gm)
-	if !isEqual(expected, found) {
+	if !isEqual2DSliceInt(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
@@ -213,7 +213,7 @@ func TestGetCells(t *testing.T) {
 		{-1, -1, -1},
 	}
 	found = getCells(-1, 2, 3, 2, gm)
-	if !isEqual(expected, found) {
+	if !isEqual2DSliceInt(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
@@ -223,7 +223,7 @@ func TestGetCells(t *testing.T) {
 		{-1, -1, -1},
 	}
 	found = getCells(1, 2, 3, 2, gm)
-	if !isEqual(expected, found) {
+	if !isEqual2DSliceInt(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
@@ -237,7 +237,7 @@ func TestGetCells(t *testing.T) {
 		{-1, -1},
 	}
 	found = getCells(0, -1, 2, 6, gm)
-	if !isEqual(expected, found) {
+	if !isEqual2DSliceInt(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
@@ -246,7 +246,7 @@ func TestGetCells(t *testing.T) {
 		{-1, -1, 3, 4, 5, -1, -1},
 	}
 	found = getCells(-2, 1, 7, 1, gm)
-	if !isEqual(expected, found) {
+	if !isEqual2DSliceInt(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
@@ -256,7 +256,7 @@ func TestGetCells(t *testing.T) {
 		{-1, 0, 1, 2, -1},
 	}
 	found = getCells(-1, -1, 5, 2, gm)
-	if !isEqual(expected, found) {
+	if !isEqual2DSliceInt(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
@@ -269,7 +269,7 @@ func TestGetCells(t *testing.T) {
 		{-1, -1, -1},
 	}
 	found = getCells(1, -1, 3, 5, gm)
-	if !isEqual(expected, found) {
+	if !isEqual2DSliceInt(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
@@ -279,7 +279,7 @@ func TestGetCells(t *testing.T) {
 		{-1, -1, -1, -1, -1},
 	}
 	found = getCells(-1, 2, 5, 2, gm)
-	if !isEqual(expected, found) {
+	if !isEqual2DSliceInt(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
@@ -293,7 +293,7 @@ func TestGetCells(t *testing.T) {
 		{-1, -1, -1, -1},
 	}
 	found = getCells(-3, -1, 4, 6, gm)
-	if !isEqual(expected, found) {
+	if !isEqual2DSliceInt(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
@@ -306,7 +306,7 @@ func TestGetCells(t *testing.T) {
 		{-1, -1, -1, -1, -1},
 	}
 	found = getCells(-1, -1, 5, 5, gm)
-	if !isEqual(expected, found) {
+	if !isEqual2DSliceInt(expected, found) {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 }

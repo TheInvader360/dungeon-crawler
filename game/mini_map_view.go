@@ -43,8 +43,8 @@ func init() {
 	}
 }
 
-func renderMiniMapView(g *Game, v *ebiten.Image) *ebiten.Image {
-	viewportCells := getCells(g.player.x-((viewportSize-1)/2), g.player.y-((viewportSize-1)/2), viewportSize, viewportSize, g.gridMap)
+func renderMiniMapView(p player, gm [][]int, v *ebiten.Image) *ebiten.Image {
+	viewportCells := getCells(p.x-((viewportSize-1)/2), p.y-((viewportSize-1)/2), viewportSize, viewportSize, gm)
 	for y := range viewportCells {
 		for x := range viewportCells[y] {
 			cellOp := &ebiten.DrawImageOptions{}
@@ -62,7 +62,7 @@ func renderMiniMapView(g *Game, v *ebiten.Image) *ebiten.Image {
 	playerOp := &ebiten.DrawImageOptions{}
 	w, h := playerImg.Size()
 	playerOp.GeoM.Translate(-float64(w)/2, -float64(h)/2) //move centre of image to origin before rotating
-	playerOp.GeoM.Rotate(float64(g.player.dir*90) * 2 * math.Pi / 360)
+	playerOp.GeoM.Rotate(float64(p.dir*90) * 2 * math.Pi / 360)
 	playerOp.GeoM.Translate(float64(w)/2, float64(h)/2) //move centre of image back to the starting point
 	playerOp.GeoM.Translate(float64(cellSize*((viewportSize-1)/2)+offsetX), float64(cellSize*((viewportSize-1)/2)+offsetY))
 	v.DrawImage(playerImg, playerOp)
