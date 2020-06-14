@@ -79,13 +79,11 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	screen.DrawImage(firstPersonImg, fpOp)
 	switch g.gameState {
 	case exploration:
-		if ebiten.IsKeyPressed(ebiten.KeyZ) {
-			ebitenutil.DebugPrint(screen, fmt.Sprintf("%s", g.player))
-		}
 		if ebiten.IsKeyPressed(ebiten.KeyDown) {
 			miniMapImg = renderMiniMapView(g.player, g.gridMap, miniMapImg)
 			mmOp := &ebiten.DrawImageOptions{}
 			screen.DrawImage(miniMapImg, mmOp)
+			ebitenutil.DebugPrint(screen, fmt.Sprintf("%s", g.player))
 		}
 	case combat:
 		enOp := &ebiten.DrawImageOptions{}
@@ -100,7 +98,7 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 }
 
 func main() {
-	ebiten.SetWindowSize(screenWidth*10, screenHeight*10)
+	ebiten.SetWindowSize(screenWidth*4, screenHeight*4)
 	ebiten.SetWindowTitle("Dungeon Crawler")
 	if err := ebiten.RunGame(dungeonCrawler()); err != nil {
 		log.Fatal(err)
