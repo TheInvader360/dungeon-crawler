@@ -12,8 +12,7 @@ import (
 const (
 	screenWidth  = 60
 	screenHeight = 60
-	testSkin     = "rgb"    // 1bit / db16 / rgb
-	testEnemy    = "enemy4" // entity / enemy0 / enemy1 / enemy2 / enemy3 / enemy4
+	testSkin     = "rgb" // 1bit / db16 / rgb
 )
 
 var (
@@ -25,7 +24,7 @@ var (
 
 func dungeonCrawler() *Game {
 	return &Game{
-		gridMap: newGridMap(),
+		gridMap: buildGridMap(demoMapSrc),
 		player:  newPlayer(),
 	}
 }
@@ -39,7 +38,7 @@ func init() {
 //Game ...
 type Game struct {
 	gameState gameState
-	gridMap   [][]int
+	gridMap   [][]cell
 	player    player
 }
 
@@ -50,10 +49,10 @@ func (g *Game) Update(screen *ebiten.Image) error {
 		if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
 			x, y := g.player.getCoordInFront()
 			target := getCell(x, y, g.gridMap)
-			if target != 1 {
+			if !target.wall {
 				g.player.moveTo(x, y)
 			}
-			if target > 1 {
+			if target.enemy != nil {
 				g.gameState = combat
 			}
 		}
@@ -65,7 +64,8 @@ func (g *Game) Update(screen *ebiten.Image) error {
 		}
 	case combat:
 		if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
-			setCell(g.player.x, g.player.y, 0, g.gridMap)
+			c := getCell(g.player.x, g.player.y, g.gridMap).removeEnemy()
+			setCell(g.player.x, g.player.y, g.gridMap, c)
 			g.gameState = exploration
 		}
 	}
@@ -89,7 +89,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		}
 	case combat:
 		enOp := &ebiten.DrawImageOptions{}
-		screen.DrawImage(entityNearImg, enOp)
+		screen.DrawImage(getCell(g.player.x, g.player.y, g.gridMap).enemy.nearImg, enOp)
 		ebitenutil.DebugPrint(screen, "COMBAT\nSTUB")
 	}
 }

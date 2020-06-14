@@ -4,13 +4,11 @@ import (
 	"errors"
 	"fmt"
 	"image"
-	"log"
 	"os"
 	"strings"
 	"testing"
 
 	"github.com/hajimehoshi/ebiten"
-	"github.com/hajimehoshi/ebiten/ebitenutil"
 )
 
 func TestMain(m *testing.M) {
@@ -36,7 +34,7 @@ func TestMiniMap(t *testing.T) {
 		player{x: 8, y: 6, dir: north},
 		player{x: 4, y: 8, dir: south},
 	}
-	gm := [][]int{
+	src := [][]int{
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 		{1, 0, 1, 2, 0, 2, 1, 0, 0, 1},
 		{1, 0, 1, 1, 0, 0, 2, 0, 0, 1},
@@ -48,14 +46,12 @@ func TestMiniMap(t *testing.T) {
 		{1, 0, 2, 0, 0, 0, 1, 0, 2, 1},
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 	}
+	gm := buildGridMap(src)
 	area := image.Rect(15, 15, 60, 60)
 	var infos []string
 
 	for i, p := range players {
-		expected, _, err := ebitenutil.NewImageFromFile(fmt.Sprintf("../assets/testing/mini_map/%d.png", i), ebiten.FilterDefault)
-		if err != nil {
-			log.Fatal(err)
-		}
+		expected := essentialNewImageFromFile(fmt.Sprintf("../assets/testing/mini_map/%d.png", i))
 		v, _ := ebiten.NewImage(screenWidth, screenHeight, ebiten.FilterNearest)
 		found := renderMiniMapView(p, gm, v)
 		if !isEqualImageArea(expected, found, area) {

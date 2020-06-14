@@ -9,7 +9,7 @@ type player struct {
 }
 
 func newPlayer() player {
-	return player{x: 3, y: 7, dir: north}
+	return player{x: 13, y: 1, dir: south}
 }
 
 func (p player) String() string {

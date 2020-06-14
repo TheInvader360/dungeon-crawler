@@ -1,11 +1,9 @@
 package main
 
 import (
-	"log"
 	"math"
 
 	"github.com/hajimehoshi/ebiten"
-	"github.com/hajimehoshi/ebiten/ebitenutil"
 )
 
 const (
@@ -25,35 +23,23 @@ var (
 func init() {
 	offsetX = screenWidth - cellSize*viewportSize
 	offsetY = screenHeight - cellSize*viewportSize
-	blockedImg, _, err = ebitenutil.NewImageFromFile("../assets/mini_map/blocked.png", ebiten.FilterDefault)
-	if err != nil {
-		log.Fatal(err)
-	}
-	unblockedImg, _, err = ebitenutil.NewImageFromFile("../assets/mini_map/unblocked.png", ebiten.FilterDefault)
-	if err != nil {
-		log.Fatal(err)
-	}
-	playerImg, _, err = ebitenutil.NewImageFromFile("../assets/mini_map/player.png", ebiten.FilterDefault)
-	if err != nil {
-		log.Fatal(err)
-	}
-	enemyImg, _, err = ebitenutil.NewImageFromFile("../assets/mini_map/enemy.png", ebiten.FilterDefault)
-	if err != nil {
-		log.Fatal(err)
-	}
+	blockedImg = essentialNewImageFromFile("../assets/mini_map/blocked.png")
+	unblockedImg = essentialNewImageFromFile("../assets/mini_map/unblocked.png")
+	playerImg = essentialNewImageFromFile("../assets/mini_map/player.png")
+	enemyImg = essentialNewImageFromFile("../assets/mini_map/enemy.png")
 }
 
-func renderMiniMapView(p player, gm [][]int, v *ebiten.Image) *ebiten.Image {
+func renderMiniMapView(p player, gm [][]cell, v *ebiten.Image) *ebiten.Image {
 	viewportCells := getCells(p.x-((viewportSize-1)/2), p.y-((viewportSize-1)/2), viewportSize, viewportSize, gm)
 	for y := range viewportCells {
 		for x := range viewportCells[y] {
 			cellOp := &ebiten.DrawImageOptions{}
 			cellOp.GeoM.Translate(float64(x*cellSize+offsetX), float64(y*cellSize+offsetY))
 			v.DrawImage(unblockedImg, cellOp)
-			if viewportCells[y][x] == 1 {
+			if viewportCells[y][x].wall {
 				v.DrawImage(blockedImg, cellOp)
 			}
-			if viewportCells[y][x] > 1 {
+			if viewportCells[y][x].enemy != nil {
 				v.DrawImage(enemyImg, cellOp)
 			}
 		}

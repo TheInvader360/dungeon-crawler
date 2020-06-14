@@ -3,11 +3,30 @@ package main
 import (
 	"image"
 	"image/color"
+	"log"
 
 	"github.com/hajimehoshi/ebiten"
+	"github.com/hajimehoshi/ebiten/ebitenutil"
 )
 
 func isEqual2DSliceInt(a, b [][]int) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i := range a {
+		if len(a[i]) != len(b[i]) {
+			return false
+		}
+		for j := range a[i] {
+			if a[i][j] != b[i][j] {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+func isEqual2DSliceCell(a, b [][]cell) bool {
 	if len(a) != len(b) {
 		return false
 	}
@@ -41,4 +60,12 @@ func isEqualColor(a, b color.Color) bool {
 	br, bg, bb, ba := b.RGBA()
 	//log.Println(fmt.Sprintf("a(%d,%d,%d,%d) b(%d,%d,%d,%d)", ar, ag, ab, aa, br, bg, bb, ba))
 	return ar == br && ag == bg && ab == bb && aa == ba
+}
+
+func essentialNewImageFromFile(path string) *ebiten.Image {
+	img, _, err := ebitenutil.NewImageFromFile(path, ebiten.FilterDefault)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return img
 }
