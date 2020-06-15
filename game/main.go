@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
@@ -49,8 +50,19 @@ func (g *Game) Update(screen *ebiten.Image) error {
 		if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
 			x, y := g.player.getCoordInFront()
 			target := getCell(x, y, g.gridMap)
-			if !target.wall {
+			if target.wall == none {
 				g.player.moveTo(x, y)
+			} else if target.wall == breakable {
+				c := getCell(x, y, g.gridMap).removeWall()
+				setCell(x, y, g.gridMap, c)
+				g.player.moveTo(x, y)
+			} else if target.wall == locked {
+				if g.player.keys > 0 {
+					c := getCell(x, y, g.gridMap).removeWall()
+					setCell(x, y, g.gridMap, c)
+					g.player.keys--
+					g.player.moveTo(x, y)
+				}
 			}
 			if target.enemy != nil {
 				g.gameState = combat
@@ -68,6 +80,9 @@ func (g *Game) Update(screen *ebiten.Image) error {
 			setCell(g.player.x, g.player.y, g.gridMap, c)
 			g.gameState = exploration
 		}
+	}
+	if ebiten.IsKeyPressed(ebiten.KeyEscape) {
+		os.Exit(0)
 	}
 	return nil
 }
@@ -88,7 +103,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	case combat:
 		enOp := &ebiten.DrawImageOptions{}
 		screen.DrawImage(getCell(g.player.x, g.player.y, g.gridMap).enemy.nearImg, enOp)
-		ebitenutil.DebugPrint(screen, "COMBAT\nSTUB")
+		ebitenutil.DebugPrint(screen, "COMBAT")
 	}
 }
 
@@ -98,7 +113,8 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 }
 
 func main() {
-	ebiten.SetWindowSize(screenWidth*4, screenHeight*4)
+	ebiten.SetFullscreen(true)
+	//ebiten.SetWindowSize(screenWidth*4, screenHeight*4)
 	ebiten.SetWindowTitle("Dungeon Crawler")
 	if err := ebiten.RunGame(dungeonCrawler()); err != nil {
 		log.Fatal(err)

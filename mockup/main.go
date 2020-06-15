@@ -20,13 +20,12 @@ const (
 )
 
 var (
-	avatar     *ebiten.Image
-	bg         *ebiten.Image
-	entityFar  *ebiten.Image
-	entityMid  *ebiten.Image
-	entityNear *ebiten.Image
-	cells      []cell
-	err        error
+	avatar    *ebiten.Image
+	bg        *ebiten.Image
+	entityFar *ebiten.Image
+	entityMid *ebiten.Image
+	cells     []cell
+	err       error
 )
 
 type cell struct {
@@ -54,13 +53,9 @@ func initGame() func(*ebiten.Image) error {
 	if err != nil {
 		log.Fatal(err)
 	}
-	entityNear, _, err = ebitenutil.NewImageFromFile("../assets/entity/entityNear.png", ebiten.FilterDefault)
-	if err != nil {
-		log.Fatal(err)
-	}
 	for i := 0; i < 10; i++ {
 		cell := cell{}
-		if i == 3 || i == 4 || i == 5 || i == 9 {
+		if i == 2 || i == 3 || i == 5 || i == 6 || i == 8 || i == 9 {
 			cell.blocked = true
 		}
 		if i > 1 && i < 8 {

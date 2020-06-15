@@ -8,11 +8,15 @@ import (
 
 var (
 	bgImg    *ebiten.Image
+	crackImg *ebiten.Image
+	lockImg  *ebiten.Image
 	wallImgs []*ebiten.Image
 )
 
 func init() {
 	bgImg = essentialNewImageFromFile(fmt.Sprintf("../assets/%s/bg.png", testSkin))
+	crackImg = essentialNewImageFromFile(fmt.Sprintf("../assets/%s/crack.png", testSkin))
+	lockImg = essentialNewImageFromFile(fmt.Sprintf("../assets/%s/lock.png", testSkin))
 	for i := 0; i < 10; i++ {
 		wallImg := essentialNewImageFromFile(fmt.Sprintf("../assets/%s/%d.png", testSkin, i))
 		wallImgs = append(wallImgs, wallImg)
@@ -74,10 +78,20 @@ func renderFirstPersonView(p player, gm [][]cell, v *ebiten.Image) *ebiten.Image
 
 	for i := range fovCells {
 		cellOp := &ebiten.DrawImageOptions{}
-		if fovCells[i].wall {
+		if fovCells[i].wall != none {
 			v.DrawImage(wallImgs[i], cellOp)
+			if i == 7 {
+				//only draw cracks/locks if immediately in front of player
+				if fovCells[i].wall == breakable {
+					v.DrawImage(crackImg, cellOp)
+				}
+				if fovCells[i].wall == locked {
+					v.DrawImage(lockImg, cellOp)
+				}
+			}
 		}
 		if fovCells[i].enemy != nil {
+			//order: ffl, ffr, ff, fl, fr, f
 			if i == 2 {
 				cellOp.GeoM.Translate(1, 20)
 				v.DrawImage(fovCells[i].enemy.farImg, cellOp)

@@ -1,12 +1,26 @@
 package main
 
+type wallType int
+
+const (
+	none wallType = iota
+	solid
+	breakable
+	locked
+)
+
 type cell struct {
-	wall  bool
+	wall  wallType
 	enemy *enemy
 }
 
 func newCell() cell {
-	return cell{wall: false, enemy: nil}
+	return cell{wall: none, enemy: nil}
+}
+
+func (c cell) removeWall() cell {
+	c.wall = none
+	return c
 }
 
 func (c cell) removeEnemy() cell {

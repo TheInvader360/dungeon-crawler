@@ -1,0 +1,13 @@
+Entity sprite workflow (gimp)
+=============================
+
+Mid: dimensions 26x30 inc transparent pixels, palette db16
+
+Far: scale 17x20, interpolation none, resize canvas 18x20, mode rgb, brightness -127, brightness -127
+
+Near: scale 52x60, interpolation none, resize canvas 18x20 centred
+
+Mid: mode rgb, brightness -80
+
+Tinify all images before commit to repo
+

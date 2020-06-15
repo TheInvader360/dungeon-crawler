@@ -3,17 +3,21 @@ package main
 import "fmt"
 
 type player struct {
-	x   int
-	y   int
-	dir direction
+	x     int
+	y     int
+	dir   direction
+	hpMax int
+	hp    int
+	keys  int
+	gold  int
 }
 
 func newPlayer() player {
-	return player{x: 13, y: 1, dir: south}
+	return player{x: 1, y: 9, dir: north, hpMax: 5, hp: 3, keys: 1, gold: 10}
 }
 
 func (p player) String() string {
-	return fmt.Sprintf("%s(%d,%d)", p.dir, p.x, p.y)
+	return fmt.Sprintf("%s(%d,%d)\n%d/%d\nK%d\n%d", p.dir, p.x, p.y, p.hp, p.hpMax, p.keys, p.gold)
 }
 
 func (p *player) getCoordInFront() (int, int) {

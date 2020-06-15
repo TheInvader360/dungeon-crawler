@@ -6,19 +6,19 @@ import (
 
 func TestGetCell(t *testing.T) {
 	src := [][]int{
-		{1, 2, 0},
-		{0, 0, 3},
-		{4, 0, 5},
+		{10, 50, 00},
+		{00, 00, 51},
+		{52, 00, 53},
 	}
 	gm := buildGridMap(src)
 	expected := newCell()
-	expected.wall = true
+	expected.wall = solid
 	found := getCell(0, 0, gm)
 	if found != expected {
 		t.Errorf("Expected %v (found %v).", expected, found)
 	}
 
-	expected.wall = false
+	expected.wall = none
 	expected.enemy = &enemies[0]
 	found = getCell(1, 0, gm)
 	if found != expected {
@@ -71,17 +71,17 @@ func TestGetCell(t *testing.T) {
 
 func TestGetCells(t *testing.T) {
 	src := [][]int{
-		{0, 1, 2},
-		{3, 4, 5},
-		{6, 7, 8},
+		{00, 10, 50},
+		{51, 52, 53},
+		{54, 55, 56},
 	}
 	gm := buildGridMap(src)
 
 	//complete set
 	expectedSrc := [][]int{
-		{0, 1, 2},
-		{3, 4, 5},
-		{6, 7, 8},
+		{00, 10, 50},
+		{51, 52, 53},
+		{54, 55, 56},
 	}
 	expected := buildGridMap(expectedSrc)
 	found := getCells(0, 0, 3, 3, gm)
@@ -91,8 +91,8 @@ func TestGetCells(t *testing.T) {
 
 	//subset multirow multicol
 	expectedSrc = [][]int{
-		{0, 1},
-		{3, 4},
+		{00, 10},
+		{51, 52},
 	}
 	expected = buildGridMap(expectedSrc)
 	found = getCells(0, 0, 2, 2, gm)
@@ -102,8 +102,8 @@ func TestGetCells(t *testing.T) {
 
 	//subset multirow multicol
 	expectedSrc = [][]int{
-		{4, 5},
-		{7, 8},
+		{52, 53},
+		{55, 56},
 	}
 	expected = buildGridMap(expectedSrc)
 	found = getCells(1, 1, 2, 2, gm)
@@ -113,8 +113,8 @@ func TestGetCells(t *testing.T) {
 
 	//subset multirow singlecol
 	expectedSrc = [][]int{
-		{3},
-		{6},
+		{51},
+		{54},
 	}
 	expected = buildGridMap(expectedSrc)
 	found = getCells(0, 1, 1, 2, gm)
@@ -124,7 +124,7 @@ func TestGetCells(t *testing.T) {
 
 	//subset singlerow multicol
 	expectedSrc = [][]int{
-		{7, 8},
+		{55, 56},
 	}
 	expected = buildGridMap(expectedSrc)
 	found = getCells(1, 2, 2, 1, gm)
@@ -134,7 +134,7 @@ func TestGetCells(t *testing.T) {
 
 	//subset singlerow singlecol
 	expectedSrc = [][]int{
-		{5},
+		{53},
 	}
 	expected = buildGridMap(expectedSrc)
 	found = getCells(2, 1, 1, 1, gm)
@@ -155,8 +155,8 @@ func TestGetCells(t *testing.T) {
 	//out of top bounds
 	expectedSrc = [][]int{
 		{-1, -1, -1},
-		{0, 1, 2},
-		{3, 4, 5},
+		{00, 10, 50},
+		{51, 52, 53},
 	}
 	expected = buildGridMap(expectedSrc)
 	found = getCells(0, -1, 3, 3, gm)
@@ -166,8 +166,8 @@ func TestGetCells(t *testing.T) {
 
 	//out of right bounds
 	expectedSrc = [][]int{
-		{4, 5, -1},
-		{7, 8, -1},
+		{52, 53, -1},
+		{55, 56, -1},
 	}
 	expected = buildGridMap(expectedSrc)
 	found = getCells(1, 1, 3, 2, gm)
@@ -177,8 +177,8 @@ func TestGetCells(t *testing.T) {
 
 	//out of bottom bounds
 	expectedSrc = [][]int{
-		{5},
-		{8},
+		{53},
+		{56},
 		{-1},
 	}
 	expected = buildGridMap(expectedSrc)
@@ -189,7 +189,7 @@ func TestGetCells(t *testing.T) {
 
 	//out of left bounds
 	expectedSrc = [][]int{
-		{-1, -1, 3, 4},
+		{-1, -1, 51, 52},
 	}
 	expected = buildGridMap(expectedSrc)
 	found = getCells(-2, 1, 4, 1, gm)
@@ -200,7 +200,7 @@ func TestGetCells(t *testing.T) {
 	//out of top-left bounds
 	expectedSrc = [][]int{
 		{-1, -1, -1, -1},
-		{-1, -1, 0, 1},
+		{-1, -1, 00, 10},
 	}
 	expected = buildGridMap(expectedSrc)
 	found = getCells(-2, -1, 4, 2, gm)
@@ -211,7 +211,7 @@ func TestGetCells(t *testing.T) {
 	//out of top-right bounds
 	expectedSrc = [][]int{
 		{-1, -1, -1, -1},
-		{1, 2, -1, -1},
+		{10, 50, -1, -1},
 	}
 	expected = buildGridMap(expectedSrc)
 	found = getCells(1, -1, 4, 2, gm)
@@ -221,7 +221,7 @@ func TestGetCells(t *testing.T) {
 
 	//out of bottom-left bounds
 	expectedSrc = [][]int{
-		{-1, 6, 7},
+		{-1, 54, 55},
 		{-1, -1, -1},
 	}
 	expected = buildGridMap(expectedSrc)
@@ -232,7 +232,7 @@ func TestGetCells(t *testing.T) {
 
 	//out of bottom-right bounds
 	expectedSrc = [][]int{
-		{7, 8, -1},
+		{55, 56, -1},
 		{-1, -1, -1},
 	}
 	expected = buildGridMap(expectedSrc)
@@ -244,9 +244,9 @@ func TestGetCells(t *testing.T) {
 	//out of top-bottom bounds
 	expectedSrc = [][]int{
 		{-1, -1},
-		{0, 1},
-		{3, 4},
-		{6, 7},
+		{00, 10},
+		{51, 52},
+		{54, 55},
 		{-1, -1},
 		{-1, -1},
 	}
@@ -258,7 +258,7 @@ func TestGetCells(t *testing.T) {
 
 	//out of left-right bounds
 	expectedSrc = [][]int{
-		{-1, -1, 3, 4, 5, -1, -1},
+		{-1, -1, 51, 52, 53, -1, -1},
 	}
 	expected = buildGridMap(expectedSrc)
 	found = getCells(-2, 1, 7, 1, gm)
@@ -269,7 +269,7 @@ func TestGetCells(t *testing.T) {
 	//out of left-top-right bounds
 	expectedSrc = [][]int{
 		{-1, -1, -1, -1, -1},
-		{-1, 0, 1, 2, -1},
+		{-1, 00, 10, 50, -1},
 	}
 	expected = buildGridMap(expectedSrc)
 	found = getCells(-1, -1, 5, 2, gm)
@@ -280,9 +280,9 @@ func TestGetCells(t *testing.T) {
 	//out of top-right-bottom bounds
 	expectedSrc = [][]int{
 		{-1, -1, -1},
-		{1, 2, -1},
-		{4, 5, -1},
-		{7, 8, -1},
+		{10, 50, -1},
+		{52, 53, -1},
+		{55, 56, -1},
 		{-1, -1, -1},
 	}
 	expected = buildGridMap(expectedSrc)
@@ -293,7 +293,7 @@ func TestGetCells(t *testing.T) {
 
 	//out of right-bottom-left bounds
 	expectedSrc = [][]int{
-		{-1, 6, 7, 8, -1},
+		{-1, 54, 55, 56, -1},
 		{-1, -1, -1, -1, -1},
 	}
 	expected = buildGridMap(expectedSrc)
@@ -305,9 +305,9 @@ func TestGetCells(t *testing.T) {
 	//out of bottom-left-top bounds
 	expectedSrc = [][]int{
 		{-1, -1, -1, -1},
-		{-1, -1, -1, 0},
-		{-1, -1, -1, 3},
-		{-1, -1, -1, 6},
+		{-1, -1, -1, 00},
+		{-1, -1, -1, 51},
+		{-1, -1, -1, 54},
 		{-1, -1, -1, -1},
 		{-1, -1, -1, -1},
 	}
@@ -320,9 +320,9 @@ func TestGetCells(t *testing.T) {
 	//out of all bounds
 	expectedSrc = [][]int{
 		{-1, -1, -1, -1, -1},
-		{-1, 0, 1, 2, -1},
-		{-1, 3, 4, 5, -1},
-		{-1, 6, 7, 8, -1},
+		{-1, 00, 10, 50, -1},
+		{-1, 51, 52, 53, -1},
+		{-1, 54, 55, 56, -1},
 		{-1, -1, -1, -1, -1},
 	}
 	expected = buildGridMap(expectedSrc)
