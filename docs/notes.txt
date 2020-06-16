@@ -1,0 +1,8 @@
+WebAssembly build:
+GOOS=js GOARCH=wasm go build -o dungeon.wasm github.com/TheInvader360/dungeon-crawler
+cp $(go env GOROOT)/misc/wasm/wasm_exec.js .
+
+Run locally:
+cd docs
+go run main.go
+
