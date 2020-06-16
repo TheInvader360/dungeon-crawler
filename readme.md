@@ -6,7 +6,7 @@ A minimal dungeon crawling adventure game (RPG) written in go using the ebiten l
 * Super low res graphics.
 * Minimal controls.
 
-<img src="https://raw.githubusercontent.com/TheInvader360/dungeon-crawler/master/notes/demo.gif" width="180" height="180">
+<img src="https://raw.githubusercontent.com/TheInvader360/dungeon-crawler/master/misc/demo.gif" width="180" height="180">
 
 ### Minimal Features
 
