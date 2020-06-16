@@ -13,11 +13,11 @@ type player struct {
 }
 
 func newPlayer() player {
-	return player{x: 1, y: 9, dir: north, hpMax: 5, hp: 3, keys: 1, gold: 10}
+	return player{x: 7, y: 11, dir: north, hpMax: 5, hp: 3, keys: 0, gold: 0}
 }
 
 func (p player) String() string {
-	return fmt.Sprintf("%s(%d,%d)\n%d/%d\nK%d\n%d", p.dir, p.x, p.y, p.hp, p.hpMax, p.keys, p.gold)
+	return fmt.Sprintf("%s(%d,%d)\n%d/%d\nK%d\nG%d", p.dir, p.x, p.y, p.hp, p.hpMax, p.keys, p.gold)
 }
 
 func (p *player) getCoordInFront() (int, int) {

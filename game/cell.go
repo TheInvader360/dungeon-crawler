@@ -10,8 +10,9 @@ const (
 )
 
 type cell struct {
-	wall  wallType
-	enemy *enemy
+	wall        wallType
+	collectible *collectible
+	enemy       *enemy
 }
 
 func newCell() cell {
@@ -20,6 +21,11 @@ func newCell() cell {
 
 func (c cell) removeWall() cell {
 	c.wall = none
+	return c
+}
+
+func (c cell) removeCollectible() cell {
+	c.collectible = nil
 	return c
 }
 

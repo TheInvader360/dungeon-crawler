@@ -90,6 +90,33 @@ func renderFirstPersonView(p player, gm [][]cell, v *ebiten.Image) *ebiten.Image
 				}
 			}
 		}
+		if fovCells[i].collectible != nil {
+			//order: ffl, ffr, ff, fl, fr, f
+			if i == 2 {
+				cellOp.GeoM.Translate(1, 20)
+				v.DrawImage(fovCells[i].collectible.farImg, cellOp)
+			}
+			if i == 3 {
+				cellOp.GeoM.Translate(41, 20)
+				v.DrawImage(fovCells[i].collectible.farImg, cellOp)
+			}
+			if i == 4 {
+				cellOp.GeoM.Translate(21, 20)
+				v.DrawImage(fovCells[i].collectible.farImg, cellOp)
+			}
+			if i == 5 {
+				cellOp.GeoM.Translate(-13, 15)
+				v.DrawImage(fovCells[i].collectible.midImg, cellOp)
+			}
+			if i == 6 {
+				cellOp.GeoM.Translate(47, 15)
+				v.DrawImage(fovCells[i].collectible.midImg, cellOp)
+			}
+			if i == 7 {
+				cellOp.GeoM.Translate(17, 15)
+				v.DrawImage(fovCells[i].collectible.midImg, cellOp)
+			}
+		}
 		if fovCells[i].enemy != nil {
 			//order: ffl, ffr, ff, fl, fr, f
 			if i == 2 {

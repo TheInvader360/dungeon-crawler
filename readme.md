@@ -18,9 +18,9 @@ A minimal dungeon crawling adventure game (RPG) written in go using the ebiten l
 - [x] Removable blocked cells (breakable/unlockable)
 - [x] Enemies
 - [x] First person billboards (enemies/collectibles/etc)
-- [ ] Key collectibles
-- [ ] Loot collectibles
-- [ ] Health collectibles
+- [x] Key collectibles
+- [x] Loot collectibles
+- [x] Health collectibles
 - [ ] Load next dungeon on exit
 - [ ] Player and enemy stats
 - [ ] Combat simulation (turn based)
@@ -45,4 +45,3 @@ A minimal dungeon crawling adventure game (RPG) written in go using the ebiten l
 - [ ] Enemy movement (basic fight or flight AI with pathfinding)
 - [ ] Sound effects
 - [ ] Music
-

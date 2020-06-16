@@ -25,7 +25,7 @@ var (
 
 func dungeonCrawler() *Game {
 	return &Game{
-		gridMap: buildGridMap(demoMapSrc),
+		gridMap: buildGridMap(dungeonSrcA),
 		player:  newPlayer(),
 	}
 }
@@ -64,6 +64,18 @@ func (g *Game) Update(screen *ebiten.Image) error {
 					g.player.moveTo(x, y)
 				}
 			}
+			if target.collectible != nil {
+				if target.collectible == &key {
+					g.player.keys++
+				} else if target.collectible == &gold {
+					g.player.gold++
+				} else if target.collectible == &potion {
+					g.player.hp = g.player.hpMax
+				}
+				c := getCell(x, y, g.gridMap).removeCollectible()
+				setCell(x, y, g.gridMap, c)
+				g.player.moveTo(x, y)
+			}
 			if target.enemy != nil {
 				g.gameState = combat
 			}
@@ -89,12 +101,14 @@ func (g *Game) Update(screen *ebiten.Image) error {
 
 //Draw ...
 func (g *Game) Draw(screen *ebiten.Image) {
-	firstPersonImg = renderFirstPersonView(g.player, g.gridMap, firstPersonImg)
-	fpOp := &ebiten.DrawImageOptions{}
-	screen.DrawImage(firstPersonImg, fpOp)
 	switch g.gameState {
 	case exploration:
-		if ebiten.IsKeyPressed(ebiten.KeyDown) {
+		if !ebiten.IsKeyPressed(ebiten.KeyDown) {
+			firstPersonImg = renderFirstPersonView(g.player, g.gridMap, firstPersonImg)
+			fpOp := &ebiten.DrawImageOptions{}
+			screen.DrawImage(firstPersonImg, fpOp)
+			ebitenutil.DebugPrint(screen, fmt.Sprintf("%s", g.player.dir))
+		} else {
 			miniMapImg = renderMiniMapView(g.player, g.gridMap, miniMapImg)
 			mmOp := &ebiten.DrawImageOptions{}
 			screen.DrawImage(miniMapImg, mmOp)
@@ -113,8 +127,8 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 }
 
 func main() {
-	ebiten.SetFullscreen(true)
-	//ebiten.SetWindowSize(screenWidth*4, screenHeight*4)
+	//ebiten.SetFullscreen(true)
+	ebiten.SetWindowSize(screenWidth*10, screenHeight*10)
 	ebiten.SetWindowTitle("Dungeon Crawler")
 	if err := ebiten.RunGame(dungeonCrawler()); err != nil {
 		log.Fatal(err)
