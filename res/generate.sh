@@ -1,3 +1,7 @@
+go get github.com/hajimehoshi/file2byteslice
+
+
+
 file2byteslice -package=resentity -input=./entity/enemy0Far.png -output=./entity/enemy0Far.go -var=Enemy0Far_png
 file2byteslice -package=resentity -input=./entity/enemy0Mid.png -output=./entity/enemy0Mid.go -var=Enemy0Mid_png
 file2byteslice -package=resentity -input=./entity/enemy0Near.png -output=./entity/enemy0Near.go -var=Enemy0Near_png
@@ -83,3 +87,4 @@ file2byteslice -package=restest -input=./test/expected2.png -output=./test/expec
 file2byteslice -package=restest -input=./test/expected3.png -output=./test/expected3.go -var=Expected3_png
 file2byteslice -package=restest -input=./test/expected4.png -output=./test/expected4.go -var=Expected4_png
 file2byteslice -package=restest -input=./test/expected5.png -output=./test/expected5.go -var=Expected5_png
+

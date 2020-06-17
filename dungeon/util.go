@@ -27,6 +27,23 @@ func IsEqual2DSliceInt(a, b [][]int) bool {
 	return true
 }
 
+func IsEqual2DSliceString(a, b [][]string) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i := range a {
+		if len(a[i]) != len(b[i]) {
+			return false
+		}
+		for j := range a[i] {
+			if a[i][j] != b[i][j] {
+				return false
+			}
+		}
+	}
+	return true
+}
+
 func IsEqual2DSliceCell(a, b [][]cell) bool {
 	if len(a) != len(b) {
 		return false
@@ -72,7 +89,7 @@ func EssentialNewImageFromEncoded(encoded []byte) *ebiten.Image {
 	return sprite
 }
 
-func essentialNewImageFromFile(path string) *ebiten.Image {
+func EssentialNewImageFromFile(path string) *ebiten.Image {
 	img, _, err := ebitenutil.NewImageFromFile(path, ebiten.FilterDefault)
 	if err != nil {
 		log.Fatal(err)

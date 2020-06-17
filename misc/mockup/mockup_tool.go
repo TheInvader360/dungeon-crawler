@@ -1,21 +1,21 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/hajimehoshi/ebiten/inpututil"
 
 	"golang.org/x/image/colornames"
 
+	"github.com/TheInvader360/dungeon-crawler/dungeon"
+	resentity "github.com/TheInvader360/dungeon-crawler/res/entity"
+	resfirstperson "github.com/TheInvader360/dungeon-crawler/res/firstperson/rgb" // 1bit/rgb
 	"github.com/hajimehoshi/ebiten"
-	"github.com/hajimehoshi/ebiten/ebitenutil"
 )
 
 const (
 	screenWidth  = 60
 	screenHeight = 96
-	skin         = "rgb" // 1bit/rgb
 	cellSize     = 12
 )
 
@@ -36,18 +36,21 @@ type cell struct {
 }
 
 func initGame() func(*ebiten.Image) error {
-	bg, _, err = ebitenutil.NewImageFromFile(fmt.Sprintf("../../res/firstperson/%s/bg.png", skin), ebiten.FilterDefault)
-	if err != nil {
-		log.Fatal(err)
-	}
-	entityFar, _, err = ebitenutil.NewImageFromFile("../../res/entity/entityFar.png", ebiten.FilterDefault)
-	if err != nil {
-		log.Fatal(err)
-	}
-	entityMid, _, err = ebitenutil.NewImageFromFile("../../res/entity/entityMid.png", ebiten.FilterDefault)
-	if err != nil {
-		log.Fatal(err)
-	}
+	bg := dungeon.EssentialNewImageFromEncoded(resfirstperson.Bg_png)
+	entityFar := dungeon.EssentialNewImageFromEncoded(resentity.EntityFar_png)
+	entityMid := dungeon.EssentialNewImageFromEncoded(resentity.EntityMid_png)
+	w0 := dungeon.EssentialNewImageFromEncoded(resfirstperson.Wall0_png)
+	w1 := dungeon.EssentialNewImageFromEncoded(resfirstperson.Wall1_png)
+	w2 := dungeon.EssentialNewImageFromEncoded(resfirstperson.Wall2_png)
+	w3 := dungeon.EssentialNewImageFromEncoded(resfirstperson.Wall3_png)
+	w4 := dungeon.EssentialNewImageFromEncoded(resfirstperson.Wall4_png)
+	w5 := dungeon.EssentialNewImageFromEncoded(resfirstperson.Wall5_png)
+	w6 := dungeon.EssentialNewImageFromEncoded(resfirstperson.Wall6_png)
+	w7 := dungeon.EssentialNewImageFromEncoded(resfirstperson.Wall7_png)
+	w8 := dungeon.EssentialNewImageFromEncoded(resfirstperson.Wall8_png)
+	w9 := dungeon.EssentialNewImageFromEncoded(resfirstperson.Wall9_png)
+	wallImgs := []*ebiten.Image{w0, w1, w2, w3, w4, w5, w6, w7, w8, w9}
+
 	for i := 0; i < 10; i++ {
 		cell := cell{}
 		if i == 2 || i == 3 || i == 5 || i == 6 || i == 8 || i == 9 {
@@ -86,12 +89,7 @@ func initGame() func(*ebiten.Image) error {
 				cell.btnX = 3 * cellSize
 			}
 		}
-		var path = fmt.Sprintf("../../res/firstperson/%s/wall%d.png", skin, i)
-		var view, _, err = ebitenutil.NewImageFromFile(path, ebiten.FilterDefault)
-		if err != nil {
-			log.Fatal(err)
-		}
-		cell.view = view
+		cell.view = wallImgs[i]
 		cells = append(cells, cell)
 	}
 
@@ -101,6 +99,7 @@ func initGame() func(*ebiten.Image) error {
 	cellUnblockedImage.Fill(colornames.Antiquewhite)
 	cellEntityImage, _ := ebiten.NewImage(cellSize/2, cellSize/2, ebiten.FilterDefault)
 	cellEntityImage.Fill(colornames.Cornflowerblue)
+
 	return func(screen *ebiten.Image) error {
 		if inpututil.IsMouseButtonJustReleased(ebiten.MouseButtonLeft) {
 			x, y := ebiten.CursorPosition()
@@ -175,7 +174,7 @@ func initGame() func(*ebiten.Image) error {
 }
 
 func main() {
-	if err := ebiten.Run(initGame(), screenWidth, screenHeight, 8, "Dungeon Crawler Mockup"); err != nil {
+	if err := ebiten.Run(initGame(), screenWidth, screenHeight, 8, "First Person View Mockup"); err != nil {
 		log.Fatal(err)
 	}
 }
