@@ -24,7 +24,8 @@ var (
 func NewGame() *Game {
 	return &Game{
 		gridMap: buildGridMap(dungeonSrcA),
-		player:  newPlayer(),
+		//gridMap: buildGridMap(dungeonSrcB),
+		player: newPlayer(),
 	}
 }
 

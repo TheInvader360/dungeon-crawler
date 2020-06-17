@@ -8,7 +8,6 @@ import (
 	"golang.org/x/image/colornames"
 
 	"github.com/TheInvader360/dungeon-crawler/dungeon"
-	resentity "github.com/TheInvader360/dungeon-crawler/res/entity"
 	resfirstperson "github.com/TheInvader360/dungeon-crawler/res/firstperson/rgb" // 1bit/rgb
 	"github.com/hajimehoshi/ebiten"
 )
@@ -37,6 +36,8 @@ type cell struct {
 
 func initGame() func(*ebiten.Image) error {
 	bg := dungeon.EssentialNewImageFromEncoded(resfirstperson.Bg_png)
+	//entityFar := dungeon.EssentialNewImageFromFile("../../res/entity/potionFar.png")
+	//entityMid := dungeon.EssentialNewImageFromFile("../../res/entity/potionMid.png")
 	entityFar := dungeon.EssentialNewImageFromEncoded(resentity.EntityFar_png)
 	entityMid := dungeon.EssentialNewImageFromEncoded(resentity.EntityMid_png)
 	w0 := dungeon.EssentialNewImageFromEncoded(resfirstperson.Wall0_png)

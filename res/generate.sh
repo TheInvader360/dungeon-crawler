@@ -34,6 +34,8 @@ file2byteslice -package=resentity -input=./entity/keyFar.png -output=./entity/ke
 file2byteslice -package=resentity -input=./entity/keyMid.png -output=./entity/keyMid.go -var=KeyMid_png
 file2byteslice -package=resentity -input=./entity/potionFar.png -output=./entity/potionFar.go -var=PotionFar_png
 file2byteslice -package=resentity -input=./entity/potionMid.png -output=./entity/potionMid.go -var=PotionMid_png
+file2byteslice -package=resentity -input=./entity/scrollFar.png -output=./entity/scrollFar.go -var=ScrollFar_png
+file2byteslice -package=resentity -input=./entity/scrollMid.png -output=./entity/scrollMid.go -var=ScrollMid_png
 
 
 
