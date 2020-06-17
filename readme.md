@@ -1,4 +1,4 @@
-## Dungeon Crawler
+# Dungeon Crawler
 
 A minimal dungeon crawling adventure game (RPG) written in go using the ebiten library.
 
@@ -6,20 +6,18 @@ A minimal dungeon crawling adventure game (RPG) written in go using the ebiten l
 * Super low res graphics.
 * Simple cursor key controls.
 
+## Browser Demo
 
-### Browser Demo
+Play the unfinished game here https://theinvader360.github.io/dungeon-crawler/
 
-<!--<img src="https://raw.githubusercontent.com/TheInvader360/dungeon-crawler/master/misc/demo.gif" width="180" height="180">-->
-Try the unfinished game here https://theinvader360.github.io/dungeon-crawler/
-
-
-### Local Setup
+## Local Setup
 
     git clone https://github.com/TheInvader360/dungeon-crawler
     cd dungeon-crawler/
     go test ./...
     go run main.go
 
+## Tasks / Features
 
 ### Minimal Features
 
@@ -40,7 +38,6 @@ Try the unfinished game here https://theinvader360.github.io/dungeon-crawler/
 - [ ] Game over state
 - [ ] Game completed state
 
-
 ### Feature Creep Corral
 
 - [ ] Only show visited/seen cells on mini map
@@ -59,3 +56,7 @@ Try the unfinished game here https://theinvader360.github.io/dungeon-crawler/
 - [ ] Enemy movement (basic fight or flight AI with pathfinding)
 - [ ] Sound effects
 - [ ] Music
+- [ ] Gamepad support
+- [ ] Touchscreen and mouse support
+- [ ] Mobile build
+
