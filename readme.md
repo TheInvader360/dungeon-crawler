@@ -56,7 +56,8 @@ Play the unfinished game here https://theinvader360.github.io/dungeon-crawler/
 - [ ] Enemy movement (basic fight or flight AI with pathfinding)
 - [ ] Sound effects
 - [ ] Music
-- [ ] Gamepad support
-- [ ] Touchscreen and mouse support
 - [ ] Mobile build
+- [ ] Support touchscreen input
+- [x] Support mouse input
+- [x] Support gamepad input
 

@@ -6,7 +6,6 @@ import (
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
-	"github.com/hajimehoshi/ebiten/inpututil"
 )
 
 const (
@@ -46,7 +45,7 @@ type Game struct {
 func (g *Game) Update(screen *ebiten.Image) error {
 	switch g.gameState {
 	case exploration:
-		if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
+		if IsJustPressed(u) {
 			x, y := g.player.getCoordInFront()
 			target := getCell(x, y, g.gridMap)
 			if target.wall == none {
@@ -79,14 +78,14 @@ func (g *Game) Update(screen *ebiten.Image) error {
 				g.gameState = combat
 			}
 		}
-		if inpututil.IsKeyJustPressed(ebiten.KeyLeft) {
+		if IsJustPressed(l) {
 			g.player.turnLeft()
 		}
-		if inpututil.IsKeyJustPressed(ebiten.KeyRight) {
+		if IsJustPressed(r) {
 			g.player.turnRight()
 		}
 	case combat:
-		if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
+		if IsJustPressed(u) {
 			c := getCell(g.player.x, g.player.y, g.gridMap).removeEnemy()
 			setCell(g.player.x, g.player.y, g.gridMap, c)
 			g.gameState = exploration
@@ -102,7 +101,7 @@ func (g *Game) Update(screen *ebiten.Image) error {
 func (g *Game) Draw(screen *ebiten.Image) {
 	switch g.gameState {
 	case exploration:
-		if !ebiten.IsKeyPressed(ebiten.KeyDown) {
+		if !IsPressed(d) {
 			firstPersonImg = renderFirstPersonView(g.player, g.gridMap, firstPersonImg)
 			fpOp := &ebiten.DrawImageOptions{}
 			screen.DrawImage(firstPersonImg, fpOp)
