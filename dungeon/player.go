@@ -13,8 +13,7 @@ type player struct {
 }
 
 func newPlayer() player {
-	return player{x: 1, y: 4, dir: north, hpMax: 5, hp: 3, keys: 0, gold: 0}
-	//return player{x: 7, y: 13, dir: north, hpMax: 5, hp: 3, keys: 0, gold: 0}
+	return player{x: 0, y: 0, dir: north, hpMax: 5, hp: 3, keys: 0, gold: 0}
 }
 
 func (p player) String() string {

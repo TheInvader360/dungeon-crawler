@@ -6,16 +6,22 @@ import (
 )
 
 var (
-	bgImg    *ebiten.Image
-	crackImg *ebiten.Image
-	lockImg  *ebiten.Image
-	wallImgs []*ebiten.Image
+	bgImg      *ebiten.Image
+	crackImg   *ebiten.Image
+	lockFarImg *ebiten.Image
+	lockMidImg *ebiten.Image
+	exitFarImg *ebiten.Image
+	exitMidImg *ebiten.Image
+	wallImgs   []*ebiten.Image
 )
 
 func init() {
 	bgImg = EssentialNewImageFromEncoded(resfirstperson.Bg_png)
 	crackImg = EssentialNewImageFromEncoded(resfirstperson.Crack_png)
-	lockImg = EssentialNewImageFromEncoded(resfirstperson.Lock_png)
+	lockFarImg = EssentialNewImageFromEncoded(resfirstperson.LockFar_png)
+	lockMidImg = EssentialNewImageFromEncoded(resfirstperson.LockMid_png)
+	exitFarImg = EssentialNewImageFromEncoded(resfirstperson.ExitFar_png)
+	exitMidImg = EssentialNewImageFromEncoded(resfirstperson.ExitMid_png)
 	w0 := EssentialNewImageFromEncoded(resfirstperson.Wall0_png)
 	w1 := EssentialNewImageFromEncoded(resfirstperson.Wall1_png)
 	w2 := EssentialNewImageFromEncoded(resfirstperson.Wall2_png)
@@ -86,13 +92,26 @@ func renderFirstPersonView(p player, gm [][]cell, v *ebiten.Image) *ebiten.Image
 		cellOp := &ebiten.DrawImageOptions{}
 		if fovCells[i].wall != none {
 			v.DrawImage(wallImgs[i], cellOp)
+			//cracks/locks/exits will always be in the middle of the fov
+			//cracks aren't visible from afar (can appear anywhere on map)
+			//locks/exits are visible from afar (restricted to corridors)
+			if i == 4 {
+				if fovCells[i].wall == locked {
+					v.DrawImage(lockFarImg, cellOp)
+				}
+				if fovCells[i].wall == exit {
+					v.DrawImage(exitFarImg, cellOp)
+				}
+			}
 			if i == 7 {
-				//only draw cracks/locks if immediately in front of player
 				if fovCells[i].wall == breakable {
 					v.DrawImage(crackImg, cellOp)
 				}
 				if fovCells[i].wall == locked {
-					v.DrawImage(lockImg, cellOp)
+					v.DrawImage(lockMidImg, cellOp)
+				}
+				if fovCells[i].wall == exit {
+					v.DrawImage(exitMidImg, cellOp)
 				}
 			}
 		}

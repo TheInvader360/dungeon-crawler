@@ -1,10 +1,11 @@
 package dungeon
 
-var dungeonSrcA [][]int
-var dungeonSrcB [][]int
+var sources [][][]int
+var startX, startY int
+var startDir direction
 
 func init() {
-	dungeonSrcA = [][]int{
+	src1 := [][]int{
 		{10, 10, 10, 10, 10, 10},
 		{10, 50, 00, 00, 51, 10},
 		{10, 00, 10, 10, 00, 10},
@@ -14,7 +15,7 @@ func init() {
 		{10, 11, 30, 10, 20, 10},
 		{10, 10, 10, 10, 10, 10},
 	}
-	dungeonSrcB = [][]int{
+	src2 := [][]int{
 		{10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10},
 		{10, 32, 00, 00, 00, 00, 10, 00, 00, 12, 00, 00, 00, 20, 10},
 		{10, 00, 10, 00, 30, 00, 10, 31, 10, 10, 10, 10, 10, 10, 10},
@@ -31,6 +32,15 @@ func init() {
 		{10, 31, 31, 32, 10, 10, 00, 21, 00, 10, 00, 11, 54, 31, 10},
 		{10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10},
 	}
+	src3 := [][]int{
+		{10, 20, 10},
+		{10, 00, 10},
+		{10, 31, 10},
+		{10, 00, 10},
+		{10, 21, 10},
+		{10, 10, 10},
+	}
+	sources = [][][]int{src1, src2, src3}
 }
 
 func buildGridMap(src [][]int) [][]cell {
@@ -51,10 +61,20 @@ func buildGridMap(src [][]int) [][]cell {
 				c.wall = locked
 			}
 			if src[y][x] == 20 {
-				//TODO portalExit
+				c.wall = exit
 			}
-			if src[y][x] == 21 {
-				//TODO portalStart (NESW?)
+			if src[y][x] == 21 || src[y][x] == 22 || src[y][x] == 23 || src[y][x] == 24 {
+				startX = x
+				startY = y
+				if src[y][x] == 21 {
+					startDir = north
+				} else if src[y][x] == 22 {
+					startDir = east
+				} else if src[y][x] == 23 {
+					startDir = south
+				} else {
+					startDir = west
+				}
 			}
 			if src[y][x] == 30 {
 				c.collectible = &key

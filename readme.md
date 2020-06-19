@@ -32,7 +32,7 @@ Play the unfinished game here https://theinvader360.github.io/dungeon-crawler/
 - [x] Key collectibles
 - [x] Loot collectibles
 - [x] Health collectibles
-- [ ] Load next dungeon on exit
+- [x] Load next dungeon on exit
 - [ ] Player and enemy stats
 - [ ] Combat simulation (turn based)
 - [ ] Game over state
@@ -60,4 +60,3 @@ Play the unfinished game here https://theinvader360.github.io/dungeon-crawler/
 - [ ] Support touchscreen input
 - [x] Support mouse input
 - [x] Support gamepad input
-

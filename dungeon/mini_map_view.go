@@ -19,6 +19,7 @@ var (
 	solidImg     *ebiten.Image
 	breakableImg *ebiten.Image
 	lockedImg    *ebiten.Image
+	exitImg      *ebiten.Image
 	keyImg       *ebiten.Image
 	goldImg      *ebiten.Image
 	potionImg    *ebiten.Image
@@ -33,6 +34,7 @@ func init() {
 	solidImg = EssentialNewImageFromEncoded(resminimap.Solid_png)
 	breakableImg = EssentialNewImageFromEncoded(resminimap.Breakable_png)
 	lockedImg = EssentialNewImageFromEncoded(resminimap.Locked_png)
+	exitImg = EssentialNewImageFromEncoded(resminimap.Exit_png)
 	keyImg = EssentialNewImageFromEncoded(resminimap.Key_png)
 	goldImg = EssentialNewImageFromEncoded(resminimap.Gold_png)
 	potionImg = EssentialNewImageFromEncoded(resminimap.Potion_png)
@@ -55,6 +57,9 @@ func renderMiniMapView(p player, gm [][]cell, v *ebiten.Image) *ebiten.Image {
 			}
 			if viewportCells[y][x].wall == locked {
 				v.DrawImage(lockedImg, cellOp)
+			}
+			if viewportCells[y][x].wall == exit {
+				v.DrawImage(exitImg, cellOp)
 			}
 			if viewportCells[y][x].collectible == &key {
 				v.DrawImage(keyImg, cellOp)

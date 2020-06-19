@@ -22,9 +22,7 @@ var (
 
 func NewGame() *Game {
 	return &Game{
-		gridMap: buildGridMap(dungeonSrcA),
-		//gridMap: buildGridMap(dungeonSrcB),
-		player: newPlayer(),
+		gameState: initialize,
 	}
 }
 
@@ -37,13 +35,18 @@ func init() {
 //Game ...
 type Game struct {
 	gameState gameState
-	gridMap   [][]cell
 	player    player
+	level     int
+	gridMap   [][]cell
 }
 
 //Update ...
 func (g *Game) Update(screen *ebiten.Image) error {
 	switch g.gameState {
+	case initialize:
+		g.player = newPlayer()
+		nextLevel(g)
+		g.gameState = exploration
 	case exploration:
 		if IsJustPressed(u) {
 			x, y := g.player.getCoordInFront()
@@ -61,6 +64,8 @@ func (g *Game) Update(screen *ebiten.Image) error {
 					g.player.keys--
 					g.player.moveTo(x, y)
 				}
+			} else if target.wall == exit {
+				nextLevel(g)
 			}
 			if target.collectible != nil {
 				if target.collectible == &key {
@@ -122,4 +127,16 @@ func (g *Game) Draw(screen *ebiten.Image) {
 //Layout ...
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 	return ScreenWidth, ScreenHeight
+}
+
+func nextLevel(g *Game) {
+	g.level++
+	if g.level > len(sources) {
+		//TODO completed scene, not back to level 1
+		g.level = 1
+	}
+	g.gridMap = buildGridMap(sources[g.level-1])
+	g.player.x = startX
+	g.player.y = startY
+	g.player.dir = startDir
 }

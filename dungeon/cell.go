@@ -7,6 +7,7 @@ const (
 	solid
 	breakable
 	locked
+	exit
 )
 
 type cell struct {
