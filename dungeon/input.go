@@ -14,6 +14,9 @@ const (
 	r
 )
 
+//TODO support mapping of any gamepad (currently hardcoded to xbox one usb controller)
+//TODO support touch screens if targeting mobile devices
+
 func IsPressed(btn virtualButton) bool {
 	b := false
 

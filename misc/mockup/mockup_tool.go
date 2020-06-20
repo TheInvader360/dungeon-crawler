@@ -8,6 +8,7 @@ import (
 	"golang.org/x/image/colornames"
 
 	"github.com/TheInvader360/dungeon-crawler/dungeon"
+	resentity "github.com/TheInvader360/dungeon-crawler/res/entity"
 	resfirstperson "github.com/TheInvader360/dungeon-crawler/res/firstperson/rgb" // 1bit/rgb
 	"github.com/hajimehoshi/ebiten"
 )

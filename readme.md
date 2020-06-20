@@ -34,8 +34,8 @@ Play the unfinished game here https://theinvader360.github.io/dungeon-crawler/
 - [x] Health collectibles
 - [x] Load next dungeon on exit
 - [ ] Player and enemy stats
-- [ ] Combat simulation (turn based)
-- [ ] Game over state
+- [ ] Combat simulation (turn based? rhythm based? qte based?)
+- [x] Game over state
 - [ ] Game completed state
 
 ### Feature Creep Corral
@@ -59,4 +59,6 @@ Play the unfinished game here https://theinvader360.github.io/dungeon-crawler/
 - [ ] Mobile build
 - [ ] Support touchscreen input
 - [x] Support mouse input
-- [x] Support gamepad input
+- [x] Support xbox one gamepad input
+- [ ] Support other gamepad input
+

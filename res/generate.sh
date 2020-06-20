@@ -88,6 +88,10 @@ file2byteslice -package=resminimap -input=./minimap/solid.png -output=./minimap/
 
 
 
+file2byteslice -package=resslide -input=./slide/gameOver.png -output=./slide/gameOver.go -var=GameOver_png
+
+
+
 file2byteslice -package=restest -input=./test/expected0.png -output=./test/expected0.go -var=Expected0_png
 file2byteslice -package=restest -input=./test/expected1.png -output=./test/expected1.go -var=Expected1_png
 file2byteslice -package=restest -input=./test/expected2.png -output=./test/expected2.go -var=Expected2_png

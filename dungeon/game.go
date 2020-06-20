@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	resslide "github.com/TheInvader360/dungeon-crawler/res/slide"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 )
@@ -17,6 +18,7 @@ var (
 	firstPersonImg *ebiten.Image
 	miniMapImg     *ebiten.Image
 	combatImg      *ebiten.Image
+	gameOverImg    *ebiten.Image
 	err            error
 )
 
@@ -30,6 +32,7 @@ func init() {
 	firstPersonImg, _ = ebiten.NewImage(ScreenWidth, ScreenHeight, ebiten.FilterNearest)
 	miniMapImg, _ = ebiten.NewImage(ScreenWidth, ScreenHeight, ebiten.FilterNearest)
 	combatImg, _ = ebiten.NewImage(ScreenWidth, ScreenHeight, ebiten.FilterNearest)
+	gameOverImg = EssentialNewImageFromEncoded(resslide.GameOver_png)
 }
 
 //Game ...
@@ -45,6 +48,7 @@ func (g *Game) Update(screen *ebiten.Image) error {
 	switch g.gameState {
 	case initialize:
 		g.player = newPlayer()
+		g.level = 0
 		nextLevel(g)
 		g.gameState = exploration
 	case exploration:
@@ -95,6 +99,13 @@ func (g *Game) Update(screen *ebiten.Image) error {
 			setCell(g.player.x, g.player.y, g.gridMap, c)
 			g.gameState = exploration
 		}
+		if IsJustPressed(d) {
+			g.gameState = gameOver
+		}
+	case gameOver:
+		if IsJustPressed(u) {
+			g.gameState = initialize
+		}
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyEscape) {
 		os.Exit(0)
@@ -121,6 +132,9 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		enOp := &ebiten.DrawImageOptions{}
 		screen.DrawImage(getCell(g.player.x, g.player.y, g.gridMap).enemy.nearImg, enOp)
 		ebitenutil.DebugPrint(screen, "COMBAT")
+	case gameOver:
+		op := &ebiten.DrawImageOptions{}
+		screen.DrawImage(gameOverImg, op)
 	}
 }
 

@@ -6,4 +6,5 @@ const (
 	initialize gameState = iota
 	exploration
 	combat
+	gameOver
 )
