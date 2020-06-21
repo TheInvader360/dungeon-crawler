@@ -50,11 +50,13 @@ file2byteslice -package=resfirstperson -input=./firstperson/1bit/wall7.png -outp
 file2byteslice -package=resfirstperson -input=./firstperson/1bit/wall8.png -output=./firstperson/1bit/wall8.go -var=Wall8_png
 file2byteslice -package=resfirstperson -input=./firstperson/1bit/wall9.png -output=./firstperson/1bit/wall9.go -var=Wall9_png
 file2byteslice -package=resfirstperson -input=./firstperson/1bit/bg.png -output=./firstperson/1bit/bg.go -var=Bg_png
-file2byteslice -package=resfirstperson -input=./firstperson/1bit/crack.png -output=./firstperson/1bit/crack.go -var=Crack_png
-file2byteslice -package=resfirstperson -input=./firstperson/1bit/exitFar.png -output=./firstperson/1bit/exitFar.go -var=ExitFar_png
-file2byteslice -package=resfirstperson -input=./firstperson/1bit/exitMid.png -output=./firstperson/1bit/exitMid.go -var=ExitMid_png
-file2byteslice -package=resfirstperson -input=./firstperson/1bit/lockFar.png -output=./firstperson/1bit/lockFar.go -var=LockFar_png
-file2byteslice -package=resfirstperson -input=./firstperson/1bit/lockMid.png -output=./firstperson/1bit/lockMid.go -var=LockMid_png
+file2byteslice -package=resfirstperson -input=./firstperson/1bit/crack7.png -output=./firstperson/1bit/crack7.go -var=Crack7_png
+file2byteslice -package=resfirstperson -input=./firstperson/1bit/exit4.png -output=./firstperson/1bit/exit4.go -var=Exit4_png
+file2byteslice -package=resfirstperson -input=./firstperson/1bit/exit7.png -output=./firstperson/1bit/exit7.go -var=Exit7_png
+file2byteslice -package=resfirstperson -input=./firstperson/1bit/exit8.png -output=./firstperson/1bit/exit8.go -var=Exit8_png
+file2byteslice -package=resfirstperson -input=./firstperson/1bit/exit9.png -output=./firstperson/1bit/exit9.go -var=Exit9_png
+file2byteslice -package=resfirstperson -input=./firstperson/1bit/lock4.png -output=./firstperson/1bit/lock4.go -var=Lock4_png
+file2byteslice -package=resfirstperson -input=./firstperson/1bit/lock7.png -output=./firstperson/1bit/lock7.go -var=Lock7_png
 
 file2byteslice -package=resfirstperson -input=./firstperson/rgb/wall0.png -output=./firstperson/rgb/wall0.go -var=Wall0_png
 file2byteslice -package=resfirstperson -input=./firstperson/rgb/wall1.png -output=./firstperson/rgb/wall1.go -var=Wall1_png
@@ -67,11 +69,13 @@ file2byteslice -package=resfirstperson -input=./firstperson/rgb/wall7.png -outpu
 file2byteslice -package=resfirstperson -input=./firstperson/rgb/wall8.png -output=./firstperson/rgb/wall8.go -var=Wall8_png
 file2byteslice -package=resfirstperson -input=./firstperson/rgb/wall9.png -output=./firstperson/rgb/wall9.go -var=Wall9_png
 file2byteslice -package=resfirstperson -input=./firstperson/rgb/bg.png -output=./firstperson/rgb/bg.go -var=Bg_png
-file2byteslice -package=resfirstperson -input=./firstperson/rgb/crack.png -output=./firstperson/rgb/crack.go -var=Crack_png
-file2byteslice -package=resfirstperson -input=./firstperson/rgb/exitFar.png -output=./firstperson/rgb/exitFar.go -var=ExitFar_png
-file2byteslice -package=resfirstperson -input=./firstperson/rgb/exitMid.png -output=./firstperson/rgb/exitMid.go -var=ExitMid_png
-file2byteslice -package=resfirstperson -input=./firstperson/rgb/lockFar.png -output=./firstperson/rgb/lockFar.go -var=LockFar_png
-file2byteslice -package=resfirstperson -input=./firstperson/rgb/lockMid.png -output=./firstperson/rgb/lockMid.go -var=LockMid_png
+file2byteslice -package=resfirstperson -input=./firstperson/rgb/crack7.png -output=./firstperson/rgb/crack7.go -var=Crack7_png
+file2byteslice -package=resfirstperson -input=./firstperson/rgb/exit4.png -output=./firstperson/rgb/exit4.go -var=Exit4_png
+file2byteslice -package=resfirstperson -input=./firstperson/rgb/exit7.png -output=./firstperson/rgb/exit7.go -var=Exit7_png
+file2byteslice -package=resfirstperson -input=./firstperson/rgb/exit8.png -output=./firstperson/rgb/exit8.go -var=Exit8_png
+file2byteslice -package=resfirstperson -input=./firstperson/rgb/exit9.png -output=./firstperson/rgb/exit9.go -var=Exit9_png
+file2byteslice -package=resfirstperson -input=./firstperson/rgb/lock4.png -output=./firstperson/rgb/lock4.go -var=Lock4_png
+file2byteslice -package=resfirstperson -input=./firstperson/rgb/lock7.png -output=./firstperson/rgb/lock7.go -var=Lock7_png
 
 
 

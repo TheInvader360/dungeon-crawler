@@ -6,22 +6,26 @@ import (
 )
 
 var (
-	bgImg      *ebiten.Image
-	crackImg   *ebiten.Image
-	lockFarImg *ebiten.Image
-	lockMidImg *ebiten.Image
-	exitFarImg *ebiten.Image
-	exitMidImg *ebiten.Image
-	wallImgs   []*ebiten.Image
+	bgImg     *ebiten.Image
+	crack7Img *ebiten.Image
+	lock4Img  *ebiten.Image
+	lock7Img  *ebiten.Image
+	exit4Img  *ebiten.Image
+	exit7Img  *ebiten.Image
+	exit8Img  *ebiten.Image
+	exit9Img  *ebiten.Image
+	wallImgs  []*ebiten.Image
 )
 
 func init() {
 	bgImg = EssentialNewImageFromEncoded(resfirstperson.Bg_png)
-	crackImg = EssentialNewImageFromEncoded(resfirstperson.Crack_png)
-	lockFarImg = EssentialNewImageFromEncoded(resfirstperson.LockFar_png)
-	lockMidImg = EssentialNewImageFromEncoded(resfirstperson.LockMid_png)
-	exitFarImg = EssentialNewImageFromEncoded(resfirstperson.ExitFar_png)
-	exitMidImg = EssentialNewImageFromEncoded(resfirstperson.ExitMid_png)
+	crack7Img = EssentialNewImageFromEncoded(resfirstperson.Crack7_png)
+	lock4Img = EssentialNewImageFromEncoded(resfirstperson.Lock4_png)
+	lock7Img = EssentialNewImageFromEncoded(resfirstperson.Lock7_png)
+	exit4Img = EssentialNewImageFromEncoded(resfirstperson.Exit4_png)
+	exit7Img = EssentialNewImageFromEncoded(resfirstperson.Exit7_png)
+	exit8Img = EssentialNewImageFromEncoded(resfirstperson.Exit8_png)
+	exit9Img = EssentialNewImageFromEncoded(resfirstperson.Exit9_png)
 	w0 := EssentialNewImageFromEncoded(resfirstperson.Wall0_png)
 	w1 := EssentialNewImageFromEncoded(resfirstperson.Wall1_png)
 	w2 := EssentialNewImageFromEncoded(resfirstperson.Wall2_png)
@@ -92,26 +96,36 @@ func renderFirstPersonView(p player, gm [][]cell, v *ebiten.Image) *ebiten.Image
 		cellOp := &ebiten.DrawImageOptions{}
 		if fovCells[i].wall != none {
 			v.DrawImage(wallImgs[i], cellOp)
-			//cracks/locks/exits will always be in the middle of the fov
+			//cracks can be drawn in position f(7)
+			//locks can be drawn in position ff(4)/f(7)
+			//exits can be drawn in positions ff(4)/f(7)/l(8)/r(9)
 			//cracks aren't visible from afar (can appear anywhere on map)
 			//locks/exits are visible from afar (restricted to corridors)
-			if i == 4 {
-				if fovCells[i].wall == locked {
-					v.DrawImage(lockFarImg, cellOp)
-				}
-				if fovCells[i].wall == exit {
-					v.DrawImage(exitFarImg, cellOp)
+			if fovCells[i].wall == breakable {
+				if i == 7 {
+					v.DrawImage(crack7Img, cellOp)
 				}
 			}
-			if i == 7 {
-				if fovCells[i].wall == breakable {
-					v.DrawImage(crackImg, cellOp)
+			if fovCells[i].wall == locked {
+				if i == 4 {
+					v.DrawImage(lock4Img, cellOp)
 				}
-				if fovCells[i].wall == locked {
-					v.DrawImage(lockMidImg, cellOp)
+				if i == 7 {
+					v.DrawImage(lock7Img, cellOp)
 				}
-				if fovCells[i].wall == exit {
-					v.DrawImage(exitMidImg, cellOp)
+			}
+			if fovCells[i].wall == exit {
+				if i == 4 {
+					v.DrawImage(exit4Img, cellOp)
+				}
+				if i == 7 {
+					v.DrawImage(exit7Img, cellOp)
+				}
+				if i == 8 {
+					v.DrawImage(exit8Img, cellOp)
+				}
+				if i == 9 {
+					v.DrawImage(exit9Img, cellOp)
 				}
 			}
 		}
