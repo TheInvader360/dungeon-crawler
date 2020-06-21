@@ -4,21 +4,21 @@ import (
 	"fmt"
 	"os"
 
-	resslide "github.com/TheInvader360/dungeon-crawler/res/slide"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 )
 
 const (
-	ScreenWidth  = 60
-	ScreenHeight = 60
+	ScreenWidth    = 60
+	ScreenHeight   = 60
+	ticksPerSecond = 60
 )
 
 var (
 	firstPersonImg *ebiten.Image
 	miniMapImg     *ebiten.Image
 	combatImg      *ebiten.Image
-	gameOverImg    *ebiten.Image
+	slideImg       *ebiten.Image
 	err            error
 )
 
@@ -29,14 +29,16 @@ func NewGame() *Game {
 }
 
 func init() {
+	ebiten.SetMaxTPS(ticksPerSecond)
 	firstPersonImg, _ = ebiten.NewImage(ScreenWidth, ScreenHeight, ebiten.FilterNearest)
 	miniMapImg, _ = ebiten.NewImage(ScreenWidth, ScreenHeight, ebiten.FilterNearest)
 	combatImg, _ = ebiten.NewImage(ScreenWidth, ScreenHeight, ebiten.FilterNearest)
-	gameOverImg = EssentialNewImageFromEncoded(resslide.GameOver_png)
+	slideImg, _ = ebiten.NewImage(ScreenWidth, ScreenHeight, ebiten.FilterNearest)
 }
 
 //Game ...
 type Game struct {
+	counter   int
 	gameState gameState
 	player    player
 	level     int
@@ -45,12 +47,16 @@ type Game struct {
 
 //Update ...
 func (g *Game) Update(screen *ebiten.Image) error {
+	g.counter++
 	switch g.gameState {
 	case initialize:
 		g.player = newPlayer()
 		g.level = 0
 		nextLevel(g)
-		g.gameState = exploration
+		setupSlideShow("intro")
+		g.gameState = slideShow
+	case slideShow:
+		updateSlideShow(g)
 	case exploration:
 		if IsJustPressed(u) {
 			x, y := g.player.getCoordInFront()
@@ -100,11 +106,8 @@ func (g *Game) Update(screen *ebiten.Image) error {
 			g.gameState = exploration
 		}
 		if IsJustPressed(d) {
-			g.gameState = gameOver
-		}
-	case gameOver:
-		if IsJustPressed(u) {
-			g.gameState = initialize
+			setupSlideShow("gameOver")
+			g.gameState = slideShow
 		}
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyEscape) {
@@ -116,6 +119,10 @@ func (g *Game) Update(screen *ebiten.Image) error {
 //Draw ...
 func (g *Game) Draw(screen *ebiten.Image) {
 	switch g.gameState {
+	case slideShow:
+		slideImg = renderSlide(slideImg)
+		op := &ebiten.DrawImageOptions{}
+		screen.DrawImage(slideImg, op)
 	case exploration:
 		if !IsPressed(d) {
 			firstPersonImg = renderFirstPersonView(g.player, g.gridMap, firstPersonImg)
@@ -132,9 +139,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		enOp := &ebiten.DrawImageOptions{}
 		screen.DrawImage(getCell(g.player.x, g.player.y, g.gridMap).enemy.nearImg, enOp)
 		ebitenutil.DebugPrint(screen, "COMBAT")
-	case gameOver:
-		op := &ebiten.DrawImageOptions{}
-		screen.DrawImage(gameOverImg, op)
 	}
 }
 

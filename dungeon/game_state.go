@@ -4,7 +4,7 @@ type gameState int
 
 const (
 	initialize gameState = iota
+	slideShow
 	exploration
 	combat
-	gameOver
 )

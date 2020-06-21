@@ -79,6 +79,10 @@ file2byteslice -package=resfirstperson -input=./firstperson/rgb/lock7.png -outpu
 
 
 
+file2byteslice -package=resfont -input=./font/m5x7.ttf -output=./font/m5x7.go -var=M5x7_ttf
+
+
+
 file2byteslice -package=resminimap -input=./minimap/breakable.png -output=./minimap/breakable.go -var=Breakable_png
 file2byteslice -package=resminimap -input=./minimap/enemy.png -output=./minimap/enemy.go -var=Enemy_png
 file2byteslice -package=resminimap -input=./minimap/exit.png -output=./minimap/exit.go -var=Exit_png
@@ -93,6 +97,11 @@ file2byteslice -package=resminimap -input=./minimap/solid.png -output=./minimap/
 
 
 file2byteslice -package=resslide -input=./slide/gameOver.png -output=./slide/gameOver.go -var=GameOver_png
+file2byteslice -package=resslide -input=./slide/intro0.png -output=./slide/intro0.go -var=Intro0_png
+file2byteslice -package=resslide -input=./slide/intro1.png -output=./slide/intro1.go -var=Intro1_png
+file2byteslice -package=resslide -input=./slide/intro2.png -output=./slide/intro2.go -var=Intro2_png
+file2byteslice -package=resslide -input=./slide/intro3.png -output=./slide/intro3.go -var=Intro3_png
+file2byteslice -package=resslide -input=./slide/intro4.png -output=./slide/intro4.go -var=Intro4_png
 
 
 
